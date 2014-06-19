@@ -1,10 +1,19 @@
+goog.provide('THREE.Face3');
+
+
+
 /**
+ * @constructor
+ * @param {!number} a
+ * @param {!number} b
+ * @param {!number} c
+ * @param {?Three.Vector3} normal
+ * @param {?Three.Color} color
+ * @param {!number} materialIndex
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.Face3 = function ( a, b, c, normal, color, materialIndex ) {
-
 	this.a = a;
 	this.b = b;
 	this.c = c;
@@ -18,15 +27,13 @@ THREE.Face3 = function ( a, b, c, normal, color, materialIndex ) {
 	this.vertexTangents = [];
 
 	this.materialIndex = materialIndex !== undefined ? materialIndex : 0;
-
 };
 
-THREE.Face3.prototype = {
 
-	constructor: THREE.Face3,
-
-	clone: function () {
-
+/**
+ *
+ */
+THREE.Face3.prototype.clone= function () {
 		var face = new THREE.Face3( this.a, this.b, this.c );
 
 		face.normal.copy( this.normal );
@@ -40,7 +47,4 @@ THREE.Face3.prototype = {
 		for ( i = 0, il = this.vertexTangents.length; i < il; i ++ ) face.vertexTangents[ i ] = this.vertexTangents[ i ].clone();
 
 		return face;
-
-	}
-
 };

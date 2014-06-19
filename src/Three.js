@@ -1,20 +1,15 @@
+goog.provide('THREE');
+
+
+
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author Larry Battle / http://bateru.com/news
  * @author bhouston / http://exocortex.com
  */
+THREE = { REVISION: '67' };
 
-var THREE = { REVISION: '67' };
 
-self.console = self.console || {
-
-	info: function () {},
-	log: function () {},
-	debug: function () {},
-	warn: function () {},
-	error: function () {}
-
-};
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating

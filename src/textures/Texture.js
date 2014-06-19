@@ -1,11 +1,17 @@
+goog.provide('THREE.Texture');
+
+goog.require('THREE.UVMapping');
+goog.require('THREE.Vector2');
+
+
+
 /**
+ * @constructor
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
  * @author szimek / https://github.com/szimek/
  */
-
 THREE.Texture = function ( image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy ) {
-
 	this.id = THREE.TextureIdCount ++;
 	this.uuid = THREE.Math.generateUUID();
 
@@ -37,29 +43,31 @@ THREE.Texture = function ( image, mapping, wrapS, wrapT, magFilter, minFilter, f
 
 	this._needsUpdate = false;
 	this.onUpdate = null;
-
 };
 
-THREE.Texture.prototype = {
 
-	constructor: THREE.Texture,
-
-	get needsUpdate () {
-
+/**
+ *
+ */
+THREE.Texture.prototype.getNeedsUpdate =function() {
 		return this._needsUpdate;
+};
 
-	},
 
-	set needsUpdate ( value ) {
-
+/**
+ * @param {!*} value
+ */
+THREE.Texture.prototype.setNeedsUpdate =function( value ) {
 		if ( value === true ) this.update();
 
 		this._needsUpdate = value;
+};
 
-	},
 
-	clone: function ( texture ) {
-
+/**
+ * @param {THREE.Texture} texture
+ */
+THREE.Texture.prototype.clone = function ( texture ) {
 		if ( texture === undefined ) texture = new THREE.Texture();
 
 		texture.image = this.image;
@@ -87,22 +95,25 @@ THREE.Texture.prototype = {
 		texture.unpackAlignment = this.unpackAlignment;
 
 		return texture;
-
-	},
-
-	update: function () {
-
-		this.dispatchEvent( { type: 'update' } );
-
-	},
-
-	dispose: function () {
-
-		this.dispatchEvent( { type: 'dispose' } );
-
-	}
-
 };
+
+
+/**
+ *
+ */
+THREE.Texture.prototype.update = function () {
+		this.dispatchEvent( { type: 'update' } );
+};
+
+
+/**
+ *
+ */
+THREE.Texture.prototype.dispose = function () {
+		this.dispatchEvent( { type: 'dispose' } );
+};
+
+
 
 THREE.EventDispatcher.prototype.apply( THREE.Texture.prototype );
 

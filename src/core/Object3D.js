@@ -1,12 +1,19 @@
+goog.provide('THREE.Object3D');
+
+goog.require('THREE.Matrix4');
+goog.require('THREE.Quaternion');
+goog.require('THREE.Vector3');
+
+
+
 /**
+ * @constructor
  * @author mrdoob / http://mrdoob.com/
  * @author mikael emtinger / http://gomo.se/
  * @author alteredq / http://alteredqualia.com/
  * @author WestLangley / http://github.com/WestLangley
  */
-
 THREE.Object3D = function () {
-
 	this.id = THREE.Object3DIdCount ++;
 	this.uuid = THREE.Math.generateUUID();
 
@@ -58,7 +65,6 @@ THREE.Object3D = function () {
 	this.frustumCulled = true;
 
 	this.userData = {};
-
 };
 
 

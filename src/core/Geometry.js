@@ -1,4 +1,9 @@
+goog.provide('THREE.Geometry');
+
+
+
 /**
+ * @constructor
  * @author mrdoob / http://mrdoob.com/
  * @author kile / http://kile.stravaganza.org/
  * @author alteredq / http://alteredqualia.com/
@@ -6,9 +11,7 @@
  * @author zz85 / http://www.lab4games.net/zz85/blog
  * @author bhouston / http://exocortex.com
  */
-
 THREE.Geometry = function () {
-
 	this.id = THREE.GeometryIdCount ++;
 	this.uuid = THREE.Math.generateUUID();
 
@@ -48,15 +51,13 @@ THREE.Geometry = function () {
 	this.lineDistancesNeedUpdate = false;
 
 	this.buffersNeedUpdate = false;
-
 };
 
-THREE.Geometry.prototype = {
 
-	constructor: THREE.Geometry,
-
-	applyMatrix: function ( matrix ) {
-
+/**
+ * @param {*} matrix
+ */
+Three.Geometry.prototype.applyMatrix = function ( matrix ) {
 		var normalMatrix = new THREE.Matrix3().getNormalMatrix( matrix );
 
 		for ( var i = 0, il = this.vertices.length; i < il; i ++ ) {
@@ -90,11 +91,13 @@ THREE.Geometry.prototype = {
 			this.computeBoundingSphere();
 
 		}
+};
 
-	},
 
-	computeFaceNormals: function () {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeFaceNormals = function () {
 		var cb = new THREE.Vector3(), ab = new THREE.Vector3();
 
 		for ( var f = 0, fl = this.faces.length; f < fl; f ++ ) {
@@ -114,11 +117,13 @@ THREE.Geometry.prototype = {
 			face.normal.copy( cb );
 
 		}
+};
 
-	},
 
-	computeVertexNormals: function ( areaWeighted ) {
-
+/**
+ * @param {!boolean} areaWeighted
+ */
+Three.Geometry.prototype.computeVertexNormals = function ( areaWeighted ) {
 		var v, vl, f, fl, face, vertices;
 
 		vertices = new Array( this.vertices.length );
@@ -185,11 +190,13 @@ THREE.Geometry.prototype = {
 			face.vertexNormals[ 2 ] = vertices[ face.c ].clone();
 
 		}
+};
 
-	},
 
-	computeMorphNormals: function () {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeMorphNormals = function () {
 		var i, il, f, fl, face;
 
 		// save original normals
@@ -302,11 +309,13 @@ THREE.Geometry.prototype = {
 			face.vertexNormals = face.__originalVertexNormals;
 
 		}
+};
 
-	},
 
-	computeTangents: function () {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeTangents = function () {
 		// based on http://www.terathon.com/code/tangent.html
 		// tangents go to vertices
 
@@ -407,11 +416,13 @@ THREE.Geometry.prototype = {
 		}
 
 		this.hasTangents = true;
+};
 
-	},
 
-	computeLineDistances: function ( ) {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeLineDistances = function ( ) {
 		var d = 0;
 		var vertices = this.vertices;
 
@@ -426,11 +437,13 @@ THREE.Geometry.prototype = {
 			this.lineDistances[ i ] = d;
 
 		}
+};
 
-	},
 
-	computeBoundingBox: function () {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeBoundingBox = function () {
 		if ( this.boundingBox === null ) {
 
 			this.boundingBox = new THREE.Box3();
@@ -438,11 +451,13 @@ THREE.Geometry.prototype = {
 		}
 
 		this.boundingBox.setFromPoints( this.vertices );
+};
 
-	},
 
-	computeBoundingSphere: function () {
-
+/**
+ *
+ */
+Three.Geometry.prototype.computeBoundingSphere = function () {
 		if ( this.boundingSphere === null ) {
 
 			this.boundingSphere = new THREE.Sphere();
@@ -450,11 +465,13 @@ THREE.Geometry.prototype = {
 		}
 
 		this.boundingSphere.setFromPoints( this.vertices );
+};
 
-	},
 
-	merge: function ( geometry, matrix, materialIndexOffset ) {
-
+/**
+ *
+ */
+Three.Geometry.prototype.merge = function ( geometry, matrix, materialIndexOffset ) {
 		if ( geometry instanceof THREE.Geometry === false ) {
 
 			console.error( 'THREE.Geometry.merge(): geometry not an instance of THREE.Geometry.', geometry );
@@ -561,17 +578,16 @@ THREE.Geometry.prototype = {
 			uvs1.push( uvCopy );
 
 		}
+};
 
-	},
 
-	/*
-	 * Checks for duplicate vertices with hashmap.
-	 * Duplicated vertices are removed
-	 * and faces' vertices are updated.
-	 */
 
-	mergeVertices: function () {
-
+/**
+ * Checks for duplicate vertices with hashmap.
+ * Duplicated vertices are removed
+ * and faces' vertices are updated.
+ */
+Three.Geometry.prototype.mergeVertices = function () {
 		var verticesMap = {}; // Hashmap for looking up vertice by position coordinates (and making sure they are unique)
 		var unique = [], changes = [];
 
@@ -650,13 +666,13 @@ THREE.Geometry.prototype = {
 		var diff = this.vertices.length - unique.length;
 		this.vertices = unique;
 		return diff;
+};
 
-	},
 
-	// Geometry splitting
-
-	makeGroups: ( function () {
-
+/**
+ * Geometry splitting
+ */
+Three.Geometry.prototype.makeGroups= ( function () {
 		var geometryGroupCounter = 0;
 		
 		return function ( usesFaceMaterial, maxVerticesInGroup ) {
@@ -717,11 +733,13 @@ THREE.Geometry.prototype = {
 			}
 
 		};
-		
-	} )(),
+} )();
 
-	clone: function () {
 
+/**
+ *
+ */
+Three.Geometry.prototype.clone = function () {
 		var geometry = new THREE.Geometry();
 
 		var vertices = this.vertices;
@@ -757,16 +775,17 @@ THREE.Geometry.prototype = {
 		}
 
 		return geometry;
-
-	},
-
-	dispose: function () {
-
-		this.dispatchEvent( { type: 'dispose' } );
-
-	}
-
 };
+
+
+/**
+ * 
+ */
+Three.Geometry.prototype.dispose = function () {
+		this.dispatchEvent( { type: 'dispose' } );
+};
+
+
 
 THREE.EventDispatcher.prototype.apply( THREE.Geometry.prototype );
 

@@ -1,9 +1,12 @@
+goog.provide('THREE.BufferGeometry');
+
+
+
 /**
+ * @constructor
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.BufferGeometry = function () {
-
 	this.id = THREE.GeometryIdCount ++;
 	this.uuid = THREE.Math.generateUUID();
 
@@ -15,15 +18,14 @@ THREE.BufferGeometry = function () {
 
 	this.boundingBox = null;
 	this.boundingSphere = null;
-
 };
 
-THREE.BufferGeometry.prototype = {
 
-	constructor: THREE.BufferGeometry,
-
-	addAttribute: function ( name, attribute ) {
-
+/**
+ * @param {!string} name
+ * @param {*} attribute
+ */
+THREE.BufferGeometry.prototype.addAttribute= function ( name, attribute ) {
 		if ( attribute instanceof THREE.BufferAttribute === false ) {
 
 			console.warn( 'DEPRECATED: BufferGeometry\'s addAttribute() now expects ( name, attribute ).' );
@@ -35,17 +37,24 @@ THREE.BufferGeometry.prototype = {
 		}
 
 		this.attributes[ name ] = attribute;
+};
 
-	},
 
-	getAttribute: function ( name ) {
-
+/**
+ * @param {!string} name
+ * @return {!Object.<*.*>}
+ */
+THREE.BufferGeometry.prototype.getAttribute = function ( name ) {
 		return this.attributes[ name ];
+};
 
-	},
 
-	addDrawCall: function ( start, count, indexOffset ) {
-
+/**
+ * @param {!number} start
+ * @param {!number} count
+ * @param {!number} indexOffset
+ */
+THREE.BufferGeometry.prototype.addDrawCall = function ( start, count, indexOffset ) {
 		this.drawcalls.push( {
 
 			start: start,
@@ -53,11 +62,13 @@ THREE.BufferGeometry.prototype = {
 			index: indexOffset !== undefined ? indexOffset : 0
 
 		} );
+};
 
-	},
 
-	applyMatrix: function ( matrix ) {
-
+/**
+ * @param {!THREE.Matrix} matrix
+ */
+THREE.BufferGeometry.prototype.applyMatrix = function ( matrix ) {
 		var position = this.attributes.position;
 
 		if ( position !== undefined ) {
@@ -77,11 +88,13 @@ THREE.BufferGeometry.prototype = {
 			normal.needsUpdate = true;
 
 		}
+};
 
-	},
 
-	computeBoundingBox: function () {
-
+/**
+ * 
+ */
+THREE.BufferGeometry.prototype.computeBoundingBox = function () {
 		if ( this.boundingBox === null ) {
 
 			this.boundingBox = new THREE.Box3();
@@ -148,11 +161,13 @@ THREE.BufferGeometry.prototype = {
 			this.boundingBox.max.set( 0, 0, 0 );
 
 		}
+};
 
-	},
 
-	computeBoundingSphere: function () {
-
+/**
+ * 
+ */
+THREE.BufferGeometry.prototype.computeBoundingSphere = function () {
 		var box = new THREE.Box3();
 		var vector = new THREE.Vector3();
 
@@ -197,18 +212,22 @@ THREE.BufferGeometry.prototype = {
 
 			}
 
-		}
+		};
+}();
 
-	}(),
 
-	computeFaceNormals: function () {
-
+/**
+ * @deprecated
+ */
+THREE.BufferGeometry.prototype.computeFaceNormals = function () {
 		// backwards compatibility
+};
 
-	},
 
-	computeVertexNormals: function () {
-
+/**
+ *
+ */
+THREE.BufferGeometry.prototype.computeVertexNormals = function () {
 		if ( this.attributes[ "position" ] ) {
 
 			var i, il;
@@ -350,14 +369,14 @@ THREE.BufferGeometry.prototype = {
 			this.normalsNeedUpdate = true;
 
 		}
+};
 
-	},
 
-	computeTangents: function () {
-
-		// based on http://www.terathon.com/code/tangent.html
-		// (per vertex tangents)
-
+/**
+ based on http://www.terathon.com/code/tangent.html
+ (per vertex tangents)
+ */
+THREE.BufferGeometry.prototype.computeTangents = function () {
 		if ( this.attributes[ "index" ] === undefined ||
 			 this.attributes[ "position" ] === undefined ||
 			 this.attributes[ "normal" ] === undefined ||
@@ -549,18 +568,18 @@ THREE.BufferGeometry.prototype = {
 			}
 
 		}
+};
 
-	},
 
-	/*
-		computeOffsets
-		Compute the draw offset for large models by chunking the index buffer into chunks of 65k addressable vertices.
-		This method will effectively rewrite the index buffer and remap all attributes to match the new indices.
-		WARNING: This method will also expand the vertex count to prevent sprawled triangles across draw offsets.
-		indexBufferSize - Defaults to 65535, but allows for larger or smaller chunks.
-	*/
-	computeOffsets: function(indexBufferSize) {
 
+/**
+ computeOffsets
+ Compute the draw offset for large models by chunking the index buffer into chunks of 65k addressable vertices.
+ This method will effectively rewrite the index buffer and remap all attributes to match the new indices.
+ WARNING: This method will also expand the vertex count to prevent sprawled triangles across draw offsets.
+ indexBufferSize - Defaults to 65535, but allows for larger or smaller chunks.
+ */
+THREE.BufferGeometry.prototype.computeOffsets = function(indexBufferSize) {
 		var size = indexBufferSize;
 		if(indexBufferSize === undefined)
 			size = 65535; //WebGL limits type of index buffer values to 16-bit.
@@ -661,16 +680,21 @@ THREE.BufferGeometry.prototype = {
 		*/
 
 		return offsets;
-	},
+};
 
-	merge: function () {
 
+/**
+ *
+ */
+THREE.BufferGeometry.prototype.merge = function () {
 		console.log( 'BufferGeometry.merge(): TODO' );
+};
 
-	},
 
-	normalizeNormals: function () {
-
+/**
+ *
+ */
+THREE.BufferGeometry.prototype.normalizeNormals = function () {
 		var normals = this.attributes[ "normal" ].array;
 
 		var x, y, z, n;
@@ -688,18 +712,21 @@ THREE.BufferGeometry.prototype = {
 			normals[ i + 2 ] *= n;
 
 		}
+};
 
-	},
 
-	/*
-		reoderBuffers:
-		Reorder attributes based on a new indexBuffer and indexMap.
-		indexBuffer - Uint16Array of the new ordered indices.
-		indexMap - Int32Array where the position is the new vertex ID and the value the old vertex ID for each vertex.
-		vertexCount - Amount of total vertices considered in this reordering (in case you want to grow the vertice stack).
-	*/
-	reorderBuffers: function(indexBuffer, indexMap, vertexCount) {
 
+/**
+ reoderBuffers:
+ Reorder attributes based on a new indexBuffer and indexMap.
+ indexBuffer - Uint16Array of the new ordered indices.
+ indexMap - Int32Array where the position is the new vertex ID and the value the old vertex ID for each vertex.
+ vertexCount - Amount of total vertices considered in this reordering (in case you want to grow the vertice stack).
+ * @param {*} indexBuffer
+ * @param {*} indexMap
+ * @param {!number} vertexCount
+ */
+THREE.BufferGeometry.prototype.reorderBuffers = function(indexBuffer, indexMap, vertexCount) {
 		/* Create a copy of all attributes for reordering. */
 		var sortedAttributes = {};
 		var types = [ Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array, Int32Array, Uint32Array, Float32Array, Float64Array ];
@@ -738,10 +765,13 @@ THREE.BufferGeometry.prototype = {
 			this.attributes[attr].array = sortedAttributes[attr];
 			this.attributes[attr].numItems = this.attributes[attr].itemSize * vertexCount;
 		}
-	},
+};
 
-	clone: function () {
 
+/**
+ *
+ */
+THREE.BufferGeometry.prototype.clone = function () {
 		var geometry = new THREE.BufferGeometry();
 
 		var types = [ Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array, Int32Array, Uint32Array, Float32Array, Float64Array ];
@@ -790,15 +820,16 @@ THREE.BufferGeometry.prototype = {
 		}
 
 		return geometry;
-
-	},
-
-	dispose: function () {
-
-		this.dispatchEvent( { type: 'dispose' } );
-
-	}
-
 };
+
+
+/**
+ *
+ */
+THREE.BufferGeometry.prototype.dispose = function () {
+		this.dispatchEvent( { type: 'dispose' } );
+};
+
+
 
 THREE.EventDispatcher.prototype.apply( THREE.BufferGeometry.prototype );

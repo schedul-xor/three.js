@@ -1,9 +1,13 @@
+goog.provide('THREE.Scene');
+
+goog.require('THREE.Object3D');
+
+
+
 /**
  * @author mrdoob / http://mrdoob.com/
  */
-
 THREE.Scene = function () {
-
 	THREE.Object3D.call( this );
 
 	this.fog = null;
@@ -16,13 +20,15 @@ THREE.Scene = function () {
 
 	this.__objectsAdded = [];
 	this.__objectsRemoved = [];
-
 };
+goog.inherits(THREE.Scene,THREE.Object3D);
 
-THREE.Scene.prototype = Object.create( THREE.Object3D.prototype );
 
-THREE.Scene.prototype.__addObject = function ( object ) {
-
+/**
+ * @private
+ * @param {!*} object
+ */
+THREE.Scene.prototype.addObject_ = function ( object ) {
 	if ( object instanceof THREE.Light ) {
 
 		if ( this.__lights.indexOf( object ) === - 1 ) {
@@ -58,14 +64,17 @@ THREE.Scene.prototype.__addObject = function ( object ) {
 
 	for ( var c = 0; c < object.children.length; c ++ ) {
 
-		this.__addObject( object.children[ c ] );
+		this.addObject_( object.children[ c ] );
 
 	}
-
 };
 
-THREE.Scene.prototype.__removeObject = function ( object ) {
 
+/**
+ * @private
+ * @param {!*} object
+ */
+THREE.Scene.prototype.removeObject_ = function ( object ) {
 	if ( object instanceof THREE.Light ) {
 
 		var i = this.__lights.indexOf( object );
@@ -80,7 +89,7 @@ THREE.Scene.prototype.__removeObject = function ( object ) {
 
 			for ( var x = 0; x < object.shadowCascadeArray.length; x ++ ) {
 
-				this.__removeObject( object.shadowCascadeArray[ x ] );
+				this.removeObject_( object.shadowCascadeArray[ x ] );
 
 			}
 
@@ -107,14 +116,16 @@ THREE.Scene.prototype.__removeObject = function ( object ) {
 
 	for ( var c = 0; c < object.children.length; c ++ ) {
 
-		this.__removeObject( object.children[ c ] );
+		this.removeObject_( object.children[ c ] );
 
 	}
-
 };
 
-THREE.Scene.prototype.clone = function ( object ) {
 
+/**
+ *
+ */
+THREE.Scene.prototype.clone = function ( object ) {
 	if ( object === undefined ) object = new THREE.Scene();
 
 	THREE.Object3D.prototype.clone.call(this, object);
@@ -126,5 +137,4 @@ THREE.Scene.prototype.clone = function ( object ) {
 	object.matrixAutoUpdate = this.matrixAutoUpdate;
 
 	return object;
-
 };

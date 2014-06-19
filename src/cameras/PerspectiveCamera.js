@@ -1,12 +1,22 @@
+goog.provide('THREE.PerspectiveCamera');
+
+goog.require('THREE.Camera');
+
+
+
 /**
+ * @constructor
+ * @extends{THREE.Camera}
+ * @param {number} fov
+ * @param {number} aspect
+ * @param {number} near
+ * @param {number} far
  * @author mrdoob / http://mrdoob.com/
  * @author greggman / http://games.greggman.com/
  * @author zz85 / http://www.lab4games.net/zz85/blog
  */
-
 THREE.PerspectiveCamera = function ( fov, aspect, near, far ) {
-
-	THREE.Camera.call( this );
+    goog.base(this);
 
 	this.fov = fov !== undefined ? fov : 50;
 	this.aspect = aspect !== undefined ? aspect : 1;
@@ -14,26 +24,24 @@ THREE.PerspectiveCamera = function ( fov, aspect, near, far ) {
 	this.far = far !== undefined ? far : 2000;
 
 	this.updateProjectionMatrix();
-
 };
-
-THREE.PerspectiveCamera.prototype = Object.create( THREE.Camera.prototype );
+goog.inherits(THREE.PerspectiveCamera,THREE.Camera);
 
 
 /**
  * Uses Focal Length (in mm) to estimate and set FOV
  * 35mm (fullframe) camera is used if frame size is not specified;
  * Formula based on http://www.bobatkins.com/photography/technical/field_of_view.html
+ *
+ * @param {number} focalLength
+ * @param {number} frameHeight
  */
-
 THREE.PerspectiveCamera.prototype.setLens = function ( focalLength, frameHeight ) {
-
 	if ( frameHeight === undefined ) frameHeight = 24;
 
 	this.fov = 2 * THREE.Math.radToDeg( Math.atan( frameHeight / ( focalLength * 2 ) ) );
 	this.updateProjectionMatrix();
-
-}
+};
 
 
 /**
@@ -70,10 +78,15 @@ THREE.PerspectiveCamera.prototype.setLens = function ( focalLength, frameHeight 
  *   camera.setOffset( fullWidth, fullHeight, w * 2, h * 1, w, h );
  *
  *   Note there is no reason monitors have to be the same size or in a grid.
+ * 
+ * @param {number} fullWidth
+ * @param {number} fullHeight
+ * @param {number} x
+ * @param {number} y
+ * @param {number} width
+ * @param {number} height
  */
-
 THREE.PerspectiveCamera.prototype.setViewOffset = function ( fullWidth, fullHeight, x, y, width, height ) {
-
 	this.fullWidth = fullWidth;
 	this.fullHeight = fullHeight;
 	this.x = x;
@@ -82,12 +95,13 @@ THREE.PerspectiveCamera.prototype.setViewOffset = function ( fullWidth, fullHeig
 	this.height = height;
 
 	this.updateProjectionMatrix();
-
 };
 
 
+/**
+ *
+ */
 THREE.PerspectiveCamera.prototype.updateProjectionMatrix = function () {
-
 	if ( this.fullWidth ) {
 
 		var aspect = this.fullWidth / this.fullHeight;
@@ -112,11 +126,13 @@ THREE.PerspectiveCamera.prototype.updateProjectionMatrix = function () {
 		this.projectionMatrix.makePerspective( this.fov, this.aspect, this.near, this.far );
 
 	}
-
 };
 
-THREE.PerspectiveCamera.prototype.clone = function () {
 
+/**
+ *
+ */
+THREE.PerspectiveCamera.prototype.clone = function () {
 	var camera = new THREE.PerspectiveCamera();
 
 	THREE.Camera.prototype.clone.call( this, camera );
