@@ -1,6 +1,8 @@
+language: java
+
 before_install:
   - "wget https://plovr.googlecode.com/files/plovr-81ed862.jar"
   - "wget http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz"
 
 before_script:
-  - "java -jar plovr-81ed862.jar"
+  - "java -jar plovr-81ed862.jar serve"
