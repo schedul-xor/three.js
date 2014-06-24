@@ -1,0 +1,2 @@
+before_install:
+  - "wget https://plovr.googlecode.com/files/plovr-81ed862.jar"
