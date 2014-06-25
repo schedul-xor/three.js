@@ -1,4 +1,9 @@
 goog.provide('THREE');
+goog.provide('THREE.UVMapping');
+goog.provide('THREE.CubeReflectionMapping');
+goog.provide('THREE.CubeRefractionMapping');
+goog.provide('THREE.SphericalReflectionMapping');
+goog.provide('THREE.SphericalRefractionMapping');
 
 
 

@@ -1,6 +1,6 @@
-goog.provide('Three.DataTexture');
+goog.provide('THREE.DataTexture');
 
-goog.require('Three.Texture');
+goog.require('THREE.Texture');
 
 
 

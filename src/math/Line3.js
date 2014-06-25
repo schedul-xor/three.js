@@ -1,12 +1,14 @@
+goog.provide('THREE.Line3');
+
+
+
 /**
+ * @constructor
  * @author bhouston / http://exocortex.com
  */
-
 THREE.Line3 = function ( start, end ) {
-
 	this.start = ( start !== undefined ) ? start : new THREE.Vector3();
 	this.end = ( end !== undefined ) ? end : new THREE.Vector3();
-
 };
 
 THREE.Line3.prototype = {

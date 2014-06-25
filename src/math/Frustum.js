@@ -1,11 +1,13 @@
+goog.provide('THREE.Frustum');
+
+
 /**
+ * @constructor
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
  * @author bhouston / http://exocortex.com
  */
-
 THREE.Frustum = function ( p0, p1, p2, p3, p4, p5 ) {
-
 	this.planes = [
 
 		( p0 !== undefined ) ? p0 : new THREE.Plane(),
@@ -16,7 +18,6 @@ THREE.Frustum = function ( p0, p1, p2, p3, p4, p5 ) {
 		( p5 !== undefined ) ? p5 : new THREE.Plane()
 
 	];
-
 };
 
 THREE.Frustum.prototype = {

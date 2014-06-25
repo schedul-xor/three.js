@@ -57,7 +57,7 @@ THREE.Geometry = function () {
 /**
  * @param {!THREE.Matrix3} matrix
  */
-Three.Geometry.prototype.applyMatrix = function ( matrix ) {
+THREE.Geometry.prototype.applyMatrix = function ( matrix ) {
 		var normalMatrix = new THREE.Matrix3().getNormalMatrix( matrix );
 
 		for ( var i = 0, il = this.vertices.length; i < il; i ++ ) {
@@ -97,7 +97,7 @@ Three.Geometry.prototype.applyMatrix = function ( matrix ) {
 /**
  *
  */
-Three.Geometry.prototype.computeFaceNormals = function () {
+THREE.Geometry.prototype.computeFaceNormals = function () {
 		var cb = new THREE.Vector3(), ab = new THREE.Vector3();
 
 		for ( var f = 0, fl = this.faces.length; f < fl; f ++ ) {
@@ -123,7 +123,7 @@ Three.Geometry.prototype.computeFaceNormals = function () {
 /**
  * @param {!boolean} areaWeighted
  */
-Three.Geometry.prototype.computeVertexNormals = function ( areaWeighted ) {
+THREE.Geometry.prototype.computeVertexNormals = function ( areaWeighted ) {
 		var v, vl, f, fl, face, vertices;
 
 		vertices = new Array( this.vertices.length );
@@ -196,7 +196,7 @@ Three.Geometry.prototype.computeVertexNormals = function ( areaWeighted ) {
 /**
  *
  */
-Three.Geometry.prototype.computeMorphNormals = function () {
+THREE.Geometry.prototype.computeMorphNormals = function () {
 		var i, il, f, fl, face;
 
 		// save original normals
@@ -315,7 +315,7 @@ Three.Geometry.prototype.computeMorphNormals = function () {
 /**
  *
  */
-Three.Geometry.prototype.computeTangents = function () {
+THREE.Geometry.prototype.computeTangents = function () {
 		// based on http://www.terathon.com/code/tangent.html
 		// tangents go to vertices
 
@@ -422,7 +422,7 @@ Three.Geometry.prototype.computeTangents = function () {
 /**
  *
  */
-Three.Geometry.prototype.computeLineDistances = function ( ) {
+THREE.Geometry.prototype.computeLineDistances = function ( ) {
 		var d = 0;
 		var vertices = this.vertices;
 
@@ -443,7 +443,7 @@ Three.Geometry.prototype.computeLineDistances = function ( ) {
 /**
  *
  */
-Three.Geometry.prototype.computeBoundingBox = function () {
+THREE.Geometry.prototype.computeBoundingBox = function () {
 		if ( this.boundingBox === null ) {
 
 			this.boundingBox = new THREE.Box3();
@@ -457,7 +457,7 @@ Three.Geometry.prototype.computeBoundingBox = function () {
 /**
  *
  */
-Three.Geometry.prototype.computeBoundingSphere = function () {
+THREE.Geometry.prototype.computeBoundingSphere = function () {
 		if ( this.boundingSphere === null ) {
 
 			this.boundingSphere = new THREE.Sphere();
@@ -471,7 +471,7 @@ Three.Geometry.prototype.computeBoundingSphere = function () {
 /**
  *
  */
-Three.Geometry.prototype.merge = function ( geometry, matrix, materialIndexOffset ) {
+THREE.Geometry.prototype.merge = function ( geometry, matrix, materialIndexOffset ) {
 		if ( geometry instanceof THREE.Geometry === false ) {
 
 			console.error( 'THREE.Geometry.merge(): geometry not an instance of THREE.Geometry.', geometry );
@@ -587,7 +587,7 @@ Three.Geometry.prototype.merge = function ( geometry, matrix, materialIndexOffse
  * Duplicated vertices are removed
  * and faces' vertices are updated.
  */
-Three.Geometry.prototype.mergeVertices = function () {
+THREE.Geometry.prototype.mergeVertices = function () {
 		var verticesMap = {}; // Hashmap for looking up vertice by position coordinates (and making sure they are unique)
 		var unique = [], changes = [];
 
@@ -672,7 +672,7 @@ Three.Geometry.prototype.mergeVertices = function () {
 /**
  * Geometry splitting
  */
-Three.Geometry.prototype.makeGroups= ( function () {
+THREE.Geometry.prototype.makeGroups= ( function () {
 		var geometryGroupCounter = 0;
 		
 		return function ( usesFaceMaterial, maxVerticesInGroup ) {
@@ -739,7 +739,7 @@ Three.Geometry.prototype.makeGroups= ( function () {
 /**
  *
  */
-Three.Geometry.prototype.clone = function () {
+THREE.Geometry.prototype.clone = function () {
 		var geometry = new THREE.Geometry();
 
 		var vertices = this.vertices;
@@ -781,7 +781,7 @@ Three.Geometry.prototype.clone = function () {
 /**
  * 
  */
-Three.Geometry.prototype.dispose = function () {
+THREE.Geometry.prototype.dispose = function () {
 		this.dispatchEvent( { type: 'dispose' } );
 };
 

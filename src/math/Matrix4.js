@@ -663,7 +663,7 @@ THREE.Matrix4.prototype.rotateByAxis = function ( axis, angle ) {
 /**
  * @param {!number} v
  * @return {!THREE.Matrix4}
- */sx
+ */
 THREE.Matrix4.prototype.scale = function ( v ) {
 		var te = this.elements;
 		var x = v.x, y = v.y, z = v.z;

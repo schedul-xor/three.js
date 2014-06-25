@@ -1,79 +1,61 @@
+goog.provide('THREE.Quaternion');
+
+
 /**
+ * @constructor
+ * @param {!number} x
+ * @param {!number} y
+ * @param {!number} z
+ * @param {!number} w
  * @author mikael emtinger / http://gomo.se/
  * @author alteredq / http://alteredqualia.com/
  * @author WestLangley / http://github.com/WestLangley
  * @author bhouston / http://exocortex.com
  */
-
 THREE.Quaternion = function ( x, y, z, w ) {
-
 	this._x = x || 0;
 	this._y = y || 0;
 	this._z = z || 0;
 	this._w = ( w !== undefined ) ? w : 1;
-
 };
 
-THREE.Quaternion.prototype = {
-
-	constructor: THREE.Quaternion,
-
-	_x: 0,_y: 0, _z: 0, _w: 0,
-
-	get x () {
-
+THREE.Quaternion.prototype.getX= function  () {
 		return this._x;
+};
 
-	},
-
-	set x ( value ) {
-
+THREE.Quaternion.prototype.setX = function( value ) {
 		this._x = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get y () {
-
+THREE.Quaternion.prototype.getY= function  () {
 		return this._y;
+};
 
-	},
-
-	set y ( value ) {
-
+THREE.Quaternion.prototype.setY = function ( value ) {
 		this._y = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get z () {
-
+THREE.Quaternion.prototype.getZ = function () {
 		return this._z;
+};
 
-	},
-
-	set z ( value ) {
-
+THREE.Quaternion.prototype.setZ = function ( value ) {
 		this._z = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get w () {
-
+THREE.Quaternion.prototype.getW = function () {
 		return this._w;
+};
 
-	},
-
-	set w ( value ) {
-
+THREE.Quaternion.prototype.setW = function ( value ) {
 		this._w = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	set: function ( x, y, z, w ) {
-
+THREE.Quaternion.prototype.set = function ( x, y, z, w ) {
 		this._x = x;
 		this._y = y;
 		this._z = z;
@@ -82,11 +64,9 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	copy: function ( quaternion ) {
-
+THREE.Quaternion.prototype.copy = function ( quaternion ) {
 		this._x = quaternion._x;
 		this._y = quaternion._y;
 		this._z = quaternion._z;
@@ -95,11 +75,9 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromEuler: function ( euler, update ) {
-
+THREE.Quaternion.prototype.setFromEuler = function ( euler, update ) {
 		if ( euler instanceof THREE.Euler === false ) {
 
 			throw new Error( 'ERROR: Quaternion\'s .setFromEuler() now expects a Euler rotation rather than a Vector3 and order.  Please update your code.' );
@@ -163,11 +141,9 @@ THREE.Quaternion.prototype = {
 		if ( update !== false ) this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromAxisAngle: function ( axis, angle ) {
-
+THREE.Quaternion.prototype.setFromAxisAngle = function ( axis, angle ) {
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
 
 		// assumes axis is normalized
@@ -182,11 +158,9 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromRotationMatrix: function ( m ) {
-
+THREE.Quaternion.prototype.setFromRotationMatrix = function ( m ) {
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
@@ -241,11 +215,9 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromUnitVectors: function () {
-
+THREE.Quaternion.prototype.setFromUnitVectors = function () {
 		// http://lolengine.net/blog/2014/02/24/quaternion-from-two-vectors-final
 
 		// assumes direction vectors vFrom and vTo are normalized
@@ -289,20 +261,16 @@ THREE.Quaternion.prototype = {
 
 			return this;
 
-		}
+		};
+}();
 
-	}(),
-
-	inverse: function () {
-
+THREE.Quaternion.prototype.inverse = function () {
 		this.conjugate().normalize();
 
 		return this;
+};
 
-	},
-
-	conjugate: function () {
-
+THREE.Quaternion.prototype.conjugate = function () {
 		this._x *= -1;
 		this._y *= -1;
 		this._z *= -1;
@@ -310,23 +278,17 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	lengthSq: function () {
-
+THREE.Quaternion.prototype.lengthSq = function () {
 		return this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w;
+};
 
-	},
-
-	length: function () {
-
+THREE.Quaternion.prototype.length = function () {
 		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w );
+};
 
-	},
-
-	normalize: function () {
-
+THREE.Quaternion.prototype.normalize = function () {
 		var l = this.length();
 
 		if ( l === 0 ) {
@@ -351,9 +313,9 @@ THREE.Quaternion.prototype = {
 
 		return this;
 
-	},
+};
 
-	multiply: function ( q, p ) {
+THREE.Quaternion.prototype.multiply = function ( q, p ) {
 
 		if ( p !== undefined ) {
 
@@ -363,11 +325,9 @@ THREE.Quaternion.prototype = {
 		}
 
 		return this.multiplyQuaternions( this, q );
+};
 
-	},
-
-	multiplyQuaternions: function ( a, b ) {
-
+THREE.Quaternion.prototype.multiplyQuaternions = function ( a, b ) {
 		// from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
 
 		var qax = a._x, qay = a._y, qaz = a._z, qaw = a._w;
@@ -381,18 +341,14 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	multiplyVector3: function ( vector ) {
-
+THREE.Quaternion.prototype.multiplyVector3 = function ( vector ) {
 		console.warn( 'DEPRECATED: Quaternion\'s .multiplyVector3() has been removed. Use is now vector.applyQuaternion( quaternion ) instead.' );
 		return vector.applyQuaternion( this );
+};
 
-	},
-
-	slerp: function ( qb, t ) {
-
+THREE.Quaternion.prototype.slerp = function ( qb, t ) {
 		var x = this._x, y = this._y, z = this._z, w = this._w;
 
 		// http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/slerp/
@@ -450,17 +406,13 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	equals: function ( quaternion ) {
-
+THREE.Quaternion.prototype.equals = function ( quaternion ) {
 		return ( quaternion._x === this._x ) && ( quaternion._y === this._y ) && ( quaternion._z === this._z ) && ( quaternion._w === this._w );
+};
 
-	},
-
-	fromArray: function ( array ) {
-
+THREE.Quaternion.prototype.fromArray = function ( array ) {
 		this._x = array[ 0 ];
 		this._y = array[ 1 ];
 		this._z = array[ 2 ];
@@ -469,35 +421,24 @@ THREE.Quaternion.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	toArray: function () {
-
+THREE.Quaternion.prototype.toArray = function () {
 		return [ this._x, this._y, this._z, this._w ];
+};
 
-	},
-
-	onChange: function ( callback ) {
-
+THREE.Quaternion.prototype.onChange = function ( callback ) {
 		this.onChangeCallback = callback;
 
 		return this;
+};
 
-	},
+THREE.Quaternion.prototype.onChangeCallback = function () {};
 
-	onChangeCallback: function () {},
-
-	clone: function () {
-
+THREE.Quaternion.prototype.clone = function () {
 		return new THREE.Quaternion( this._x, this._y, this._z, this._w );
-
-	}
-
 };
 
 THREE.Quaternion.slerp = function ( qa, qb, qm, t ) {
-
 	return qm.copy( qa ).slerp( qb, t );
-
-}
+};

@@ -3,3 +3,4 @@ language: python
 script:
   - "cd utils/build"
   - "python build.py --include common --minify"
+  - "python build.py --include common --minify --minifymore"

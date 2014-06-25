@@ -19,70 +19,56 @@ THREE.Euler = function ( x, y, z, order ) {
 	this._order = order || THREE.Euler.DefaultOrder;
 };
 
+
+/**
+ * @type {!Array.<!string>} 
+ */
 THREE.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];
 
+
+/**
+ * @type {!string}
+ */
 THREE.Euler.DefaultOrder = 'XYZ';
 
-THREE.Euler.prototype = {
 
-	constructor: THREE.Euler,
-
-	_x: 0, _y: 0, _z: 0, _order: THREE.Euler.DefaultOrder,
-
-	get x () {
-
+THREE.Euler.prototype.getX = function () {
 		return this._x;
+};
 
-	},
-
-	set x ( value ) {
-
+THREE.Euler.prototype.setX = function( value ) {
 		this._x = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get y () {
-
+THREE.Euler.prototype.getY=function() {
 		return this._y;
+};
 
-	},
-
-	set y ( value ) {
-
+THREE.Euler.prototype.setY=function ( value ) {
 		this._y = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get z () {
-
+THREE.Euler.prototype.getZ=function () {
 		return this._z;
+};
 
-	},
-
-	set z ( value ) {
-
+THREE.Euler.prototype.setZ =function( value ) {
 		this._z = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	get order () {
-
+THREE.Euler.prototype.getOrder =function() {
 		return this._order;
+};
 
-	},
-
-	set order ( value ) {
-
+THREE.Euler.prototype.setOrder =function( value ) {
 		this._order = value;
 		this.onChangeCallback();
+};
 
-	},
-
-	set: function ( x, y, z, order ) {
-
+THREE.Euler.prototype.set = function ( x, y, z, order ) {
 		this._x = x;
 		this._y = y;
 		this._z = z;
@@ -91,11 +77,9 @@ THREE.Euler.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	copy: function ( euler ) {
-
+THREE.Euler.prototype.copy = function ( euler ) {
 		this._x = euler._x;
 		this._y = euler._y;
 		this._z = euler._z;
@@ -104,11 +88,9 @@ THREE.Euler.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromRotationMatrix: function ( m, order ) {
-
+THREE.Euler.prototype.setFromRotationMatrix = function ( m, order ) {
 		var clamp = THREE.Math.clamp;
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
@@ -218,7 +200,7 @@ THREE.Euler.prototype = {
 
 		} else {
 
-			console.warn( 'WARNING: Euler.setFromRotationMatrix() given unsupported order: ' + order )
+			console.warn( 'WARNING: Euler.setFromRotationMatrix() given unsupported order: ' + order );
 
 		}
 
@@ -227,11 +209,9 @@ THREE.Euler.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	setFromQuaternion: function ( q, order, update ) {
-
+THREE.Euler.prototype.setFromQuaternion = function ( q, order, update ) {
 		var clamp = THREE.Math.clamp;
 
 		// q is assumed to be normalized
@@ -283,7 +263,7 @@ THREE.Euler.prototype = {
 
 		} else {
 
-			console.warn( 'WARNING: Euler.setFromQuaternion() given unsupported order: ' + order )
+			console.warn( 'WARNING: Euler.setFromQuaternion() given unsupported order: ' + order );
 
 		}
 
@@ -292,11 +272,9 @@ THREE.Euler.prototype = {
 		if ( update !== false ) this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	reorder: function () {
-
+THREE.Euler.prototype.reorder = function () {
 		// WARNING: this discards revolution information -bhouston
 
 		var q = new THREE.Quaternion();
@@ -307,18 +285,13 @@ THREE.Euler.prototype = {
 			this.setFromQuaternion( q, newOrder );
 
 		};
+}();
 
-
-	}(),
-
-	equals: function ( euler ) {
-
+THREE.Euler.prototype.equals = function ( euler ) {
 		return ( euler._x === this._x ) && ( euler._y === this._y ) && ( euler._z === this._z ) && ( euler._order === this._order );
+};
 
-	},
-
-	fromArray: function ( array ) {
-
+THREE.Euler.prototype.fromArray = function ( array ) {
 		this._x = array[ 0 ];
 		this._y = array[ 1 ];
 		this._z = array[ 2 ];
@@ -327,29 +300,20 @@ THREE.Euler.prototype = {
 		this.onChangeCallback();
 
 		return this;
+};
 
-	},
-
-	toArray: function () {
-
+THREE.Euler.prototype.toArray = function () {
 		return [ this._x, this._y, this._z, this._order ];
+};
 
-	},
-
-	onChange: function ( callback ) {
-
+THREE.Euler.prototype.onChange = function ( callback ) {
 		this.onChangeCallback = callback;
 
 		return this;
+};
 
-	},
+THREE.Euler.prototype.onChangeCallback = function () {},
 
-	onChangeCallback: function () {},
-
-	clone: function () {
-
-		return new THREE.Euler( this._x, this._y, this._z, this._order );
-
-	}
-
+THREE.Euler.prototype.clone = function () {
+    return new THREE.Euler( this._x, this._y, this._z, this._order );
 };
