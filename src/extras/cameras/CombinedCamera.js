@@ -7,6 +7,13 @@ goog.require('THREE.Camera');
 /**
  * @constructor
  * @extends {THREE.Camera}
+ * @param {!number} width
+ * @param {!number} height
+ * @param {!number} fov
+ * @param {!number} near
+ * @param {!number} far
+ * @param {!number} orthoNear
+ * @param {!number} orthoFar
  *	@author zz85 / http://twitter.com/blurspline / http://www.lab4games.net/zz85/blog
  *
  *	A general perpose camera, for setting FOV, Lens Focal Length,

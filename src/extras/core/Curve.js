@@ -1,4 +1,11 @@
+goog.provide('THREE.Curve');
+
+
+
 /**
+ *	Abstract Curve base class
+ *
+ * @constructor
  * @author zz85 / http://www.lab4games.net/zz85/blog
  * Extensible curve object
  *
@@ -29,23 +36,17 @@
  * A series of curves can be represented as a THREE.CurvePath
  *
  **/
+THREE.Curve = function () {};
 
-/**************************************************************
- *	Abstract Curve base class
- **************************************************************/
 
-THREE.Curve = function () {
-
-};
-
-// Virtual base class method to overwrite and implement in subclasses
-//	- t [0 .. 1]
-
+/**
+ * Virtual base class method to overwrite and implement in subclasses
+ *	- t [0 .. 1]
+ * @param {!number} t
+ */
 THREE.Curve.prototype.getPoint = function ( t ) {
-
 	console.log( "Warning, getPoint() not implemented!" );
 	return null;
-
 };
 
 // Get point at relative position in curve according to arc length

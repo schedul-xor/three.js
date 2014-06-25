@@ -6,9 +6,11 @@ goog.require('THREE.Camera');
 
 /**
  * @constructor
+ * @extends {THREE.Camera}
  * @param {!number} near
  * @param {!number} far
  * @param {!number} cubeResolution
+ *
  * Camera for rendering cube maps
  *	- renders scene into axis-aligned cube
  *

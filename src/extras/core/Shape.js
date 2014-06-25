@@ -1,45 +1,54 @@
+goog.provide('THREE.Shape');
+
+goog.require('THREE.Path');
+
+
+
 /**
- * @author zz85 / http://www.lab4games.net/zz85/blog
  * Defines a 2d shape plane using paths.
+ *
+ *  STEP 1 Create a path.
+ *  STEP 2 Turn path into shape.
+ *  STEP 3 ExtrudeGeometry takes in Shape/Shapes
+ *  STEP 3a - Extract points from each shape, turn to vertices
+ *  STEP 3b - Triangulate each shape, add faces.
+ *
+ * @author zz85 / http://www.lab4games.net/zz85/blog
+ * @extends {THREE.Path}
  **/
-
-// STEP 1 Create a path.
-// STEP 2 Turn path into shape.
-// STEP 3 ExtrudeGeometry takes in Shape/Shapes
-// STEP 3a - Extract points from each shape, turn to vertices
-// STEP 3b - Triangulate each shape, add faces.
-
 THREE.Shape = function () {
+    goog.base(this,arguments);
 
-	THREE.Path.apply( this, arguments );
 	this.holes = [];
-
 };
+goog.inherits(THREE.Shape,THREE.Path);
 
-THREE.Shape.prototype = Object.create( THREE.Path.prototype );
 
-// Convenience method to return ExtrudeGeometry
-
+/**
+ * Convenience method to return ExtrudeGeometry
+ * @param {!*} options
+ */
 THREE.Shape.prototype.extrude = function ( options ) {
-
 	var extruded = new THREE.ExtrudeGeometry( this, options );
 	return extruded;
-
 };
 
-// Convenience method to return ShapeGeometry
 
+/**
+ * Convenience method to return ShapeGeometry
+ * @param {!*} options
+ */
 THREE.Shape.prototype.makeGeometry = function ( options ) {
-
 	var geometry = new THREE.ShapeGeometry( this, options );
 	return geometry;
-
 };
 
-// Get points of holes
 
+/**
+ * Get points of holes
+ * @param {!*} divisions
+ */
 THREE.Shape.prototype.getPointsHoles = function ( divisions ) {
-
 	var i, il = this.holes.length, holesPts = [];
 
 	for ( i = 0; i < il; i ++ ) {
@@ -49,13 +58,14 @@ THREE.Shape.prototype.getPointsHoles = function ( divisions ) {
 	}
 
 	return holesPts;
-
 };
 
-// Get points of holes (spaced by regular distance)
 
+/**
+ * Get points of holes (spaced by regular distance)
+ * @param {!*} divisions
+ */
 THREE.Shape.prototype.getSpacedPointsHoles = function ( divisions ) {
-
 	var i, il = this.holes.length, holesPts = [];
 
 	for ( i = 0; i < il; i ++ ) {
@@ -65,56 +75,45 @@ THREE.Shape.prototype.getSpacedPointsHoles = function ( divisions ) {
 	}
 
 	return holesPts;
-
 };
 
 
-// Get points of shape and holes (keypoints based on segments parameter)
-
+/**
+ * Get points of shape and holes (keypoints based on segments parameter)
+ * @param {!*} divisions
+ */
 THREE.Shape.prototype.extractAllPoints = function ( divisions ) {
-
 	return {
 
 		shape: this.getTransformedPoints( divisions ),
 		holes: this.getPointsHoles( divisions )
 
 	};
-
 };
 
-THREE.Shape.prototype.extractPoints = function ( divisions ) {
 
+/**
+ * @param {!*} divisions
+ */
+THREE.Shape.prototype.extractPoints = function ( divisions ) {
 	if (this.useSpacedPoints) {
 		return this.extractAllSpacedPoints(divisions);
 	}
 
 	return this.extractAllPoints(divisions);
-
 };
 
-//
-// THREE.Shape.prototype.extractAllPointsWithBend = function ( divisions, bend ) {
-//
-// 	return {
-//
-// 		shape: this.transform( bend, divisions ),
-// 		holes: this.getPointsHoles( divisions, bend )
-//
-// 	};
-//
-// };
 
-// Get points of shape and holes (spaced by regular distance)
-
+/**
+ * Get points of shape and holes (spaced by regular distance)
+ */
 THREE.Shape.prototype.extractAllSpacedPoints = function ( divisions ) {
-
 	return {
 
 		shape: this.getTransformedSpacedPoints( divisions ),
 		holes: this.getSpacedPointsHoles( divisions )
 
 	};
-
 };
 
 /**************************************************************
@@ -573,4 +572,3 @@ THREE.Shape.Utils = {
 	}
 
 };
-

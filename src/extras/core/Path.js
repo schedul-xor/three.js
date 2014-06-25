@@ -52,7 +52,8 @@ THREE.Path.prototype.moveTo = function ( x, y ) {
 
 
 /**
- *
+ * @param {!number} x
+ * @param {!number} y
  */
 THREE.Path.prototype.lineTo = function ( x, y ) {
 	var args = Array.prototype.slice.call( arguments );
@@ -70,7 +71,10 @@ THREE.Path.prototype.lineTo = function ( x, y ) {
 
 
 /**
- *
+ * @param {!number} aCPx
+ * @param {!number} aCPy
+ * @param {!number} x
+ * @param {!number} y
  */
 THREE.Path.prototype.quadraticCurveTo = function( aCPx, aCPy, aX, aY ) {
 	var args = Array.prototype.slice.call( arguments );
@@ -90,7 +94,12 @@ THREE.Path.prototype.quadraticCurveTo = function( aCPx, aCPy, aX, aY ) {
 
 
 /**
- *
+ * @param {!number} aCP1x
+ * @param {!number} aCP1y
+ * @param {!number} aCP2x
+ * @param {!number} aCP2y
+ * @param {!number} aX
+ * @param {!number} aY
  */
 THREE.Path.prototype.bezierCurveTo = function( aCP1x, aCP1y,
 											   aCP2x, aCP2y,
@@ -114,7 +123,7 @@ THREE.Path.prototype.bezierCurveTo = function( aCP1x, aCP1y,
 
 
 /**
- *
+ * @param {!Array.<!*>} pts
  */
 THREE.Path.prototype.splineThru = function( pts /*Array of Vector*/ ) {
 	var args = Array.prototype.slice.call( arguments );
@@ -134,6 +143,12 @@ THREE.Path.prototype.splineThru = function( pts /*Array of Vector*/ ) {
 
 
 /**
+ * @param {!number} aX
+ * @param {!number} aY
+ * @param {!number} aRadius
+ * @param {!number} aStartAngle
+ * @param {!number} aEndAngle
+ * @param {!number} aClockwise
  * FUTURE: Change the API or follow canvas API?
  */
 THREE.Path.prototype.arc = function ( aX, aY, aRadius,
@@ -149,7 +164,12 @@ THREE.Path.prototype.arc = function ( aX, aY, aRadius,
 
 
 /**
- *
+ * @param {!number} aX
+ * @param {!number} aY
+ * @param {!number} aRadius
+ * @param {!number} aStartAngle
+ * @param {!number} aEndAngle
+ * @param {!number} aClockwise
  */
 THREE.Path.prototype.absarc = function ( aX, aY, aRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
@@ -158,7 +178,13 @@ THREE.Path.prototype.absarc = function ( aX, aY, aRadius,
 
 
 /**
- *
+ * @param {!number} aX
+ * @param {!number} aY
+ * @param {!number} xRadius
+ * @param {!number} yRadius
+ * @param {!number} aStartAngle
+ * @param {!number} aEndAngle
+ * @param {!number} aClockwise
  */
 THREE.Path.prototype.ellipse = function ( aX, aY, xRadius, yRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
@@ -173,7 +199,13 @@ THREE.Path.prototype.ellipse = function ( aX, aY, xRadius, yRadius,
 
 
 /**
- *
+ * @param {!number} aX
+ * @param {!number} aY
+ * @param {!number} xRadius
+ * @param {!number} yRadius
+ * @param {!number} aStartAngle
+ * @param {!number} aEndAngle
+ * @param {!number} aClockwise
  */
 THREE.Path.prototype.absellipse = function ( aX, aY, xRadius, yRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
@@ -220,6 +252,9 @@ THREE.Path.prototype.getSpacedPoints = function ( divisions, closedPath ) {
 
 /**
  * Return an array of vectors based on contour of the path
+ *
+ * @param {!number} divisions
+ * @param {!*} closedPath
  */
 THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
 	if (this.useSpacedPoints) {
