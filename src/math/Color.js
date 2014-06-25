@@ -1,27 +1,29 @@
+goog.provide('THREE.Color');
+goog.provide('THREE.ColorKeywords');
+
+
+
 /**
+ * @constructor
+ * @param {!Array.<!number>} color
  * @author mrdoob / http://mrdoob.com/
  */
-
 THREE.Color = function ( color ) {
-
 	if ( arguments.length === 3 ) {
 
 		return this.setRGB( arguments[ 0 ], arguments[ 1 ], arguments[ 2 ] );
 
 	}
+    this.r = this.g = this.b = 1;
 
-	return this.set( color )
-
+	return this.set( color );
 };
 
-THREE.Color.prototype = {
 
-	constructor: THREE.Color,
-
-	r: 1, g: 1, b: 1,
-
-	set: function ( value ) {
-
+/**
+ * @param {!*} value
+ */
+THREE.Color.prototype.set = function ( value ) {
 		if ( value instanceof THREE.Color ) {
 
 			this.copy( value );
@@ -37,11 +39,14 @@ THREE.Color.prototype = {
 		}
 
 		return this;
+};
 
-	},
 
-	setHex: function ( hex ) {
-
+/**
+ * @param {!number} hex
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.setHex = function ( hex ) {
 		hex = Math.floor( hex );
 
 		this.r = ( hex >> 16 & 255 ) / 255;
@@ -49,21 +54,31 @@ THREE.Color.prototype = {
 		this.b = ( hex & 255 ) / 255;
 
 		return this;
+};
 
-	},
 
-	setRGB: function ( r, g, b ) {
-
+/**
+ * @param {!number} r
+ * @param {!number} g
+ * @param {!number} b
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.setRGB = function ( r, g, b ) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 
 		return this;
+};
 
-	},
 
-	setHSL: function ( h, s, l ) {
-
+/**
+ * @param {!number} h
+ * @param {!number} s
+ * @param {!number} l
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.setHSL = function ( h, s, l ) {
 		// h,s,l ranges are in 0.0 - 1.0
 
 		if ( s === 0 ) {
@@ -93,11 +108,14 @@ THREE.Color.prototype = {
 		}
 
 		return this;
+};
 
-	},
 
-	setStyle: function ( style ) {
-
+/**
+ * @param {!string} style
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.setStyle = function ( style ) {
 		// rgb(255,0,0)
 
 		if ( /^rgb\((\d+), ?(\d+), ?(\d+)\)$/i.test( style ) ) {
@@ -160,41 +178,53 @@ THREE.Color.prototype = {
 
 		}
 
+    return this;
+};
 
-	},
 
-	copy: function ( color ) {
-
+/**
+ * @param {!THREE.Color} color
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.copy = function ( color ) {
 		this.r = color.r;
 		this.g = color.g;
 		this.b = color.b;
 
 		return this;
+};
 
-	},
 
-	copyGammaToLinear: function ( color ) {
-
+/**
+ * @param {!THREE.Color} color
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.copyGammaToLinear = function ( color ) {
 		this.r = color.r * color.r;
 		this.g = color.g * color.g;
 		this.b = color.b * color.b;
 
 		return this;
+};
 
-	},
 
-	copyLinearToGamma: function ( color ) {
-
+/**
+ * @param {!THREE.Color} color
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.copyLinearToGamma = function ( color ) {
 		this.r = Math.sqrt( color.r );
 		this.g = Math.sqrt( color.g );
 		this.b = Math.sqrt( color.b );
 
 		return this;
+};
 
-	},
 
-	convertGammaToLinear: function () {
-
+/**
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.convertGammaToLinear = function () {
 		var r = this.r, g = this.g, b = this.b;
 
 		this.r = r * r;
@@ -202,35 +232,42 @@ THREE.Color.prototype = {
 		this.b = b * b;
 
 		return this;
+};
 
-	},
 
-	convertLinearToGamma: function () {
-
+/**
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.convertLinearToGamma = function () {
 		this.r = Math.sqrt( this.r );
 		this.g = Math.sqrt( this.g );
 		this.b = Math.sqrt( this.b );
 
 		return this;
+};
 
-	},
 
-	getHex: function () {
-
+/**
+ * @return {!number}
+ */
+THREE.Color.prototype.getHex = function () {
 		return ( this.r * 255 ) << 16 ^ ( this.g * 255 ) << 8 ^ ( this.b * 255 ) << 0;
+};
 
-	},
 
-	getHexString: function () {
-
+/**
+ * @return {!string}
+ */
+THREE.Color.prototype.getHexString = function () {
 		return ( '000000' + this.getHex().toString( 16 ) ).slice( - 6 );
+};
 
-	},
 
-	getHSL: function ( optionalTarget ) {
-
-		// h,s,l ranges are in 0.0 - 1.0
-
+/**
+ * h,s,l ranges are in 0.0 - 1.0
+ * @param {!{h:!number,s:!number,l:!number} optionalTarget
+ */
+THREE.Color.prototype.getHSL = function ( optionalTarget ) {
 		var hsl = optionalTarget || { h: 0, s: 0, l: 0 };
 
 		var r = this.r, g = this.g, b = this.b;
@@ -269,17 +306,23 @@ THREE.Color.prototype = {
 		hsl.l = lightness;
 
 		return hsl;
+};
 
-	},
 
-	getStyle: function () {
-
+/**
+ * @return {!string}
+ */
+THREE.Color.prototype.getStyle = function () {
 		return 'rgb(' + ( ( this.r * 255 ) | 0 ) + ',' + ( ( this.g * 255 ) | 0 ) + ',' + ( ( this.b * 255 ) | 0 ) + ')';
+};
 
-	},
 
-	offsetHSL: function ( h, s, l ) {
-
+/**
+ * @param {!number} h
+ * @param {!number} s
+ * @param {!number} l
+ */
+THREE.Color.prototype.offsetHSL = function ( h, s, l ) {
 		var hsl = this.getHSL();
 
 		hsl.h += h; hsl.s += s; hsl.l += l;
@@ -287,99 +330,123 @@ THREE.Color.prototype = {
 		this.setHSL( hsl.h, hsl.s, hsl.l );
 
 		return this;
+};
 
-	},
 
-	add: function ( color ) {
-
+/**
+ * @param {!THREE.Color} color
+ */
+THREE.Color.prototype.add = function ( color ) {
 		this.r += color.r;
 		this.g += color.g;
 		this.b += color.b;
 
 		return this;
+};
 
-	},
 
-	addColors: function ( color1, color2 ) {
-
+/**
+ * @param {!THREE.Color} color1
+ * @param {!THREE.Color} color2
+ */
+THREE.Color.prototype.addColors = function ( color1, color2 ) {
 		this.r = color1.r + color2.r;
 		this.g = color1.g + color2.g;
 		this.b = color1.b + color2.b;
 
 		return this;
+};
 
-	},
 
-	addScalar: function ( s ) {
-
+/**
+ * @param {!number} s
+ */
+THREE.Color.prototype.addScalar = function ( s ) {
 		this.r += s;
 		this.g += s;
 		this.b += s;
 
 		return this;
+};
 
-	},
 
-	multiply: function ( color ) {
-
+/**
+ * @param {!THREE.Color} color
+ */
+THREE.Color.prototype.multiply = function ( color ) {
 		this.r *= color.r;
 		this.g *= color.g;
 		this.b *= color.b;
 
 		return this;
+};
 
-	},
 
-	multiplyScalar: function ( s ) {
-
+/**
+ * @param {!number} s
+ */
+THREE.Color.prototype.multiplyScalar = function ( s ) {
 		this.r *= s;
 		this.g *= s;
 		this.b *= s;
 
 		return this;
+};
 
-	},
 
-	lerp: function ( color, alpha ) {
-
+/**
+ * @param {!THREE.Color} color
+ * @param {!number} alpha
+ */
+THREE.Color.prototype.lerp = function ( color, alpha ) {
 		this.r += ( color.r - this.r ) * alpha;
 		this.g += ( color.g - this.g ) * alpha;
 		this.b += ( color.b - this.b ) * alpha;
 
 		return this;
+};
 
-	},
 
-	equals: function ( c ) {
-
+/**
+ * @param {!THREE.Color} c
+ */
+THREE.Color.prototype.equals = function ( c ) {
 		return ( c.r === this.r ) && ( c.g === this.g ) && ( c.b === this.b );
+};
 
-	},
 
-	fromArray: function ( array ) {
-
+/**
+ * @param {!Array.<!number>} array
+ */
+THREE.Color.prototype.fromArray = function ( array ) {
 		this.r = array[ 0 ];
 		this.g = array[ 1 ];
 		this.b = array[ 2 ];
 
 		return this;
-
-	},
-
-	toArray: function () {
-
-		return [ this.r, this.g, this.b ];
-
-	},
-
-	clone: function () {
-
-		return new THREE.Color().setRGB( this.r, this.g, this.b );
-
-	}
-
 };
 
+
+/**
+ * @return {!Array.<!number>}
+ */
+THREE.Color.prototype.toArray = function () {
+		return [ this.r, this.g, this.b ];
+};
+
+
+/**
+ * @return {!THREE.Color}
+ */
+THREE.Color.prototype.clone = function () {
+		return new THREE.Color().setRGB( this.r, this.g, this.b );
+};
+
+
+
+/**
+ * @type {!string}
+ */
 THREE.ColorKeywords = { "aliceblue": 0xF0F8FF, "antiquewhite": 0xFAEBD7, "aqua": 0x00FFFF, "aquamarine": 0x7FFFD4, "azure": 0xF0FFFF,
 "beige": 0xF5F5DC, "bisque": 0xFFE4C4, "black": 0x000000, "blanchedalmond": 0xFFEBCD, "blue": 0x0000FF, "blueviolet": 0x8A2BE2,
 "brown": 0xA52A2A, "burlywood": 0xDEB887, "cadetblue": 0x5F9EA0, "chartreuse": 0x7FFF00, "chocolate": 0xD2691E, "coral": 0xFF7F50,

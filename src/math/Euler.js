@@ -1,16 +1,22 @@
+goog.provide('THREE.Euler');
+
+
+
 /**
+ * @constructor
+ * @param {!number} x
+ * @param {!number} y
+ * @param {!number} z
+ * @param {!string} order
  * @author mrdoob / http://mrdoob.com/
  * @author WestLangley / http://github.com/WestLangley
  * @author bhouston / http://exocortex.com
  */
-
 THREE.Euler = function ( x, y, z, order ) {
-
 	this._x = x || 0;
 	this._y = y || 0;
 	this._z = z || 0;
 	this._order = order || THREE.Euler.DefaultOrder;
-
 };
 
 THREE.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];

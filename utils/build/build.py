@@ -21,6 +21,7 @@ def main(argv=None):
 	parser.add_argument('--externs', action='append', default=['externs/common.js'])
 	parser.add_argument('--amd', action='store_true', default=False)
 	parser.add_argument('--minify', action='store_true', default=False)
+	parser.add_argument('--minifymore', action='store_true', default=False)
 	parser.add_argument('--output', default='../../build/three.js')
 	parser.add_argument('--sourcemaps', action='store_true', default=False)
 
@@ -73,7 +74,10 @@ def main(argv=None):
 
 		externs = ' --externs '.join(args.externs)
 		source = ' '.join(sources)
-		cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs %s --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT --js %s --js_output_file %s %s' % (externs, source, output, sourcemapargs)
+		advanced = ''
+		if args.minifymore is True:
+			advanced = ' --compilation_level=ADVANCED_OPTIMIZATIONS '
+		cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs %s --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT %s --js %s --js_output_file %s %s' % (externs, advanced, source, output, sourcemapargs)
 		os.system(cmd)
 
 		# header

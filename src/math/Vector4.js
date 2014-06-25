@@ -1,69 +1,95 @@
+goog.provide('THREE.Vector4');
+
+goog.require('THREE.Matrix4');
+
+
+
 /**
+ * @constructor
+ * @param {!number} x
+ * @param {!number} y
+ * @param {!number} z
+ * @param {!number} w
  * @author supereggbert / http://www.paulbrunt.co.uk/
  * @author philogb / http://blog.thejit.org/
  * @author mikael emtinger / http://gomo.se/
  * @author egraether / http://egraether.com/
  * @author WestLangley / http://github.com/WestLangley
  */
-
 THREE.Vector4 = function ( x, y, z, w ) {
-
 	this.x = x || 0;
 	this.y = y || 0;
 	this.z = z || 0;
 	this.w = ( w !== undefined ) ? w : 1;
-
 };
 
-THREE.Vector4.prototype = {
 
-	constructor: THREE.Vector4,
-
-	set: function ( x, y, z, w ) {
-
+/**
+ * @param {!number} x
+ * @param {!number} y
+ * @param {!number} z
+ * @param {!number} w
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.set = function ( x, y, z, w ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = w;
 
 		return this;
+};
 
-	},
 
-	setX: function ( x ) {
-
+/**
+ * @param {!number} x
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.setX = function ( x ) {
 		this.x = x;
 
 		return this;
+};
 
-	},
 
-	setY: function ( y ) {
-
+/**
+ * @param {!number} y
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.setY = function ( y ) {
 		this.y = y;
 
 		return this;
+};
 
-	},
 
-	setZ: function ( z ) {
-
+/**
+ * @param {!number} z
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.setZ = function ( z ) {
 		this.z = z;
 
 		return this;
+};
 
-	},
 
-	setW: function ( w ) {
-
+/**
+ * @param {!number} w
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.setW = function ( w ) {
 		this.w = w;
 
 		return this;
+};
 
-	},
 
-	setComponent: function ( index, value ) {
-
+/**
+ * @param {!number} index
+ * @param {!number} value
+ */
+THREE.Vector4.prototype.setComponent = function ( index, value ) {
 		switch ( index ) {
 
 			case 0: this.x = value; break;
@@ -73,11 +99,9 @@ THREE.Vector4.prototype = {
 			default: throw new Error( "index is out of range: " + index );
 
 		}
+};
 
-	},
-
-	getComponent: function ( index ) {
-
+THREE.Vector4.prototype.getComponent = function ( index ) {
 		switch ( index ) {
 
 			case 0: return this.x;
@@ -87,22 +111,18 @@ THREE.Vector4.prototype = {
 			default: throw new Error( "index is out of range: " + index );
 
 		}
+};
 
-	},
-
-	copy: function ( v ) {
-
+THREE.Vector4.prototype.copy = function ( v ) {
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;
 		this.w = ( v.w !== undefined ) ? v.w : 1;
 
 		return this;
+};
 
-	},
-
-	add: function ( v, w ) {
-
+THREE.Vector4.prototype.add = function ( v, w ) {
 		if ( w !== undefined ) {
 
 			console.warn( 'DEPRECATED: Vector4\'s .add() now only accepts one argument. Use .addVectors( a, b ) instead.' );
@@ -116,33 +136,27 @@ THREE.Vector4.prototype = {
 		this.w += v.w;
 
 		return this;
+};
 
-	},
-
-	addScalar: function ( s ) {
-
+THREE.Vector4.prototype.addScalar = function ( s ) {
 		this.x += s;
 		this.y += s;
 		this.z += s;
 		this.w += s;
 
 		return this;
+};
 
-	},
-
-	addVectors: function ( a, b ) {
-
+THREE.Vector4.prototype.addVectors = function ( a, b ) {
 		this.x = a.x + b.x;
 		this.y = a.y + b.y;
 		this.z = a.z + b.z;
 		this.w = a.w + b.w;
 
 		return this;
+};
 
-	},
-
-	sub: function ( v, w ) {
-
+THREE.Vector4.prototype.sub = function ( v, w ) {
 		if ( w !== undefined ) {
 
 			console.warn( 'DEPRECATED: Vector4\'s .sub() now only accepts one argument. Use .subVectors( a, b ) instead.' );
@@ -156,33 +170,32 @@ THREE.Vector4.prototype = {
 		this.w -= v.w;
 
 		return this;
+};
 
-	},
-
-	subVectors: function ( a, b ) {
-
+THREE.Vector4.prototype.subVectors = function ( a, b ) {
 		this.x = a.x - b.x;
 		this.y = a.y - b.y;
 		this.z = a.z - b.z;
 		this.w = a.w - b.w;
 
 		return this;
+};
 
-	},
-
-	multiplyScalar: function ( scalar ) {
-
+THREE.Vector4.prototype.multiplyScalar = function ( scalar ) {
 		this.x *= scalar;
 		this.y *= scalar;
 		this.z *= scalar;
 		this.w *= scalar;
 
 		return this;
+};
 
-	},
 
-	applyMatrix4: function ( m ) {
-
+/**
+ * @param {!THREE.Matrix4} m
+ * @return {!THREE.Vector4}
+ */
+THREE.Vector4.prototype.applyMatrix4 = function ( m ) {
 		var x = this.x;
 		var y = this.y;
 		var z = this.z;
@@ -196,11 +209,9 @@ THREE.Vector4.prototype = {
 		this.w = e[3] * x + e[7] * y + e[11] * z + e[15] * w;
 
 		return this;
+};
 
-	},
-
-	divideScalar: function ( scalar ) {
-
+THREE.Vector4.prototype.divideScalar = function ( scalar ) {
 		if ( scalar !== 0 ) {
 
 			var invScalar = 1 / scalar;
@@ -220,11 +231,9 @@ THREE.Vector4.prototype = {
 		}
 
 		return this;
+};
 
-	},
-
-	setAxisAngleFromQuaternion: function ( q ) {
-
+THREE.Vector4.prototype.setAxisAngleFromQuaternion = function ( q ) {
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToAngle/index.htm
 
 		// q is assumed to be normalized
@@ -249,9 +258,9 @@ THREE.Vector4.prototype = {
 
 		return this;
 
-	},
+};
 
-	setAxisAngleFromRotationMatrix: function ( m ) {
+THREE.Vector4.prototype.setAxisAngleFromRotationMatrix = function ( m ) {
 
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToAngle/index.htm
 
@@ -372,11 +381,9 @@ THREE.Vector4.prototype = {
 		this.w = Math.acos( ( m11 + m22 + m33 - 1 ) / 2 );
 
 		return this;
+};
 
-	},
-
-	min: function ( v ) {
-
+THREE.Vector4.prototype.min = function ( v ) {
 		if ( this.x > v.x ) {
 
 			this.x = v.x;
@@ -402,11 +409,9 @@ THREE.Vector4.prototype = {
 		}
 
 		return this;
+};
 
-	},
-
-	max: function ( v ) {
-
+THREE.Vector4.prototype.max = function ( v ) {
 		if ( this.x < v.x ) {
 
 			this.x = v.x;
@@ -432,11 +437,9 @@ THREE.Vector4.prototype = {
 		}
 
 		return this;
+};
 
-	},
-
-	clamp: function ( min, max ) {
-
+THREE.Vector4.prototype.clamp = function ( min, max ) {
 		// This function assumes min < max, if this assumption isn't true it will not operate correctly
 
 		if ( this.x < min.x ) {
@@ -480,11 +483,9 @@ THREE.Vector4.prototype = {
 		}
 
 		return this;
+};
 
-	},
-
-	clampScalar: ( function () {
-
+THREE.Vector4.prototype.clampScalar = ( function () {
 		var min, max;
 
 		return function ( minVal, maxVal ) {
@@ -502,91 +503,69 @@ THREE.Vector4.prototype = {
 			return this.clamp( min, max );
 
 		};
+} )();
 
-	} )(),
-
-    floor: function () {
-
+THREE.Vector4.prototype.floor = function () {
         this.x = Math.floor( this.x );
         this.y = Math.floor( this.y );
         this.z = Math.floor( this.z );
         this.w = Math.floor( this.w );
 
         return this;
+};
 
-    },
-
-    ceil: function () {
-
+THREE.Vector4.prototype.ceil = function () {
         this.x = Math.ceil( this.x );
         this.y = Math.ceil( this.y );
         this.z = Math.ceil( this.z );
         this.w = Math.ceil( this.w );
 
         return this;
+};
 
-    },
-
-    round: function () {
-
+THREE.Vector4.prototype.round = function () {
         this.x = Math.round( this.x );
         this.y = Math.round( this.y );
         this.z = Math.round( this.z );
         this.w = Math.round( this.w );
 
         return this;
+};
 
-    },
-
-    roundToZero: function () {
-
+THREE.Vector4.prototype.roundToZero = function () {
         this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
         this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
         this.z = ( this.z < 0 ) ? Math.ceil( this.z ) : Math.floor( this.z );
         this.w = ( this.w < 0 ) ? Math.ceil( this.w ) : Math.floor( this.w );
 
         return this;
+};
 
-    },
-
-	negate: function () {
-
+THREE.Vector4.prototype.negate = function () {
 		return this.multiplyScalar( -1 );
+};
 
-	},
-
-	dot: function ( v ) {
-
+THREE.Vector4.prototype.dot = function ( v ) {
 		return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
+};
 
-	},
-
-	lengthSq: function () {
-
+THREE.Vector4.prototype.lengthSq = function () {
 		return this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w;
+};
 
-	},
-
-	length: function () {
-
+THREE.Vector4.prototype.length = function () {
 		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w );
+};
 
-	},
-
-	lengthManhattan: function () {
-
+THREE.Vector4.prototype.lengthManhattan = function () {
 		return Math.abs( this.x ) + Math.abs( this.y ) + Math.abs( this.z ) + Math.abs( this.w );
+};
 
-	},
-
-	normalize: function () {
-
+THREE.Vector4.prototype.normalize = function () {
 		return this.divideScalar( this.length() );
+};
 
-	},
-
-	setLength: function ( l ) {
-
+THREE.Vector4.prototype.setLength = function ( l ) {
 		var oldLength = this.length();
 
 		if ( oldLength !== 0 && l !== oldLength ) {
@@ -596,47 +575,34 @@ THREE.Vector4.prototype = {
 		}
 
 		return this;
+};
 
-	},
-
-	lerp: function ( v, alpha ) {
-
+THREE.Vector4.prototype.lerp = function ( v, alpha ) {
 		this.x += ( v.x - this.x ) * alpha;
 		this.y += ( v.y - this.y ) * alpha;
 		this.z += ( v.z - this.z ) * alpha;
 		this.w += ( v.w - this.w ) * alpha;
 
 		return this;
+};
 
-	},
-
-	equals: function ( v ) {
-
+THREE.Vector4.prototype.equals = function ( v ) {
 		return ( ( v.x === this.x ) && ( v.y === this.y ) && ( v.z === this.z ) && ( v.w === this.w ) );
+};
 
-	},
-
-	fromArray: function ( array ) {
-
+THREE.Vector4.prototype.fromArray = function ( array ) {
 		this.x = array[ 0 ];
 		this.y = array[ 1 ];
 		this.z = array[ 2 ];
 		this.w = array[ 3 ];
 
 		return this;
+};
 
-	},
-
-	toArray: function () {
-
+THREE.Vector4.prototype.toArray = function () {
 		return [ this.x, this.y, this.z, this.w ];
+};
 
-	},
-
-	clone: function () {
-
+THREE.Vector4.prototype.clone = function () {
 		return new THREE.Vector4( this.x, this.y, this.z, this.w );
-
-	}
-
 };

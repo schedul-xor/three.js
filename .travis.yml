@@ -1,6 +1,5 @@
 language: python
 
 script:
-  - "cd ./three.js/utils/build"
+  - "cd utils/build"
   - "python build.py --include common --minify"
-  - "python build.py --include common --advanced_minify"
