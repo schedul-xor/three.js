@@ -7,10 +7,10 @@ goog.require('THREE.Camera');
 /**
  * @constructor
  * @extends{THREE.Camera}
- * @param {number} fov
- * @param {number} aspect
- * @param {number} near
- * @param {number} far
+ * @param {!number} fov
+ * @param {!number} aspect
+ * @param {!number} near
+ * @param {!number} far
  * @author mrdoob / http://mrdoob.com/
  * @author greggman / http://games.greggman.com/
  * @author zz85 / http://www.lab4games.net/zz85/blog
@@ -33,8 +33,8 @@ goog.inherits(THREE.PerspectiveCamera,THREE.Camera);
  * 35mm (fullframe) camera is used if frame size is not specified;
  * Formula based on http://www.bobatkins.com/photography/technical/field_of_view.html
  *
- * @param {number} focalLength
- * @param {number} frameHeight
+ * @param {!number} focalLength
+ * @param {!number} frameHeight
  */
 THREE.PerspectiveCamera.prototype.setLens = function ( focalLength, frameHeight ) {
 	if ( frameHeight === undefined ) frameHeight = 24;
@@ -79,12 +79,12 @@ THREE.PerspectiveCamera.prototype.setLens = function ( focalLength, frameHeight 
  *
  *   Note there is no reason monitors have to be the same size or in a grid.
  * 
- * @param {number} fullWidth
- * @param {number} fullHeight
- * @param {number} x
- * @param {number} y
- * @param {number} width
- * @param {number} height
+ * @param {!number} fullWidth
+ * @param {!number} fullHeight
+ * @param {!number} x
+ * @param {!number} y
+ * @param {!number} width
+ * @param {!number} height
  */
 THREE.PerspectiveCamera.prototype.setViewOffset = function ( fullWidth, fullHeight, x, y, width, height ) {
 	this.fullWidth = fullWidth;

@@ -18,7 +18,7 @@ goog.inherits(THREE.DataTexture,THREE.Texture);
 
 
 /**
- * @return {THREE.Texture}
+ * @return {!THREE.Texture}
  */
 THREE.DataTexture.prototype.clone = function () {
 	var texture = new THREE.DataTexture();

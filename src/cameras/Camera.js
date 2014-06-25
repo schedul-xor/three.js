@@ -39,7 +39,7 @@ THREE.Camera.prototype.lookAt = function () {
 
 
 /**
- * @param {THREE.Camera} camera
+ * @param {!THREE.Camera} camera
  */
 THREE.Camera.prototype.clone = function (camera) {
 	if ( camera === undefined ) camera = new THREE.Camera();

@@ -7,8 +7,8 @@ goog.provide('THREE.Face3');
  * @param {!number} a
  * @param {!number} b
  * @param {!number} c
- * @param {?Three.Vector3} normal
- * @param {?Three.Color} color
+ * @param {!Three.Vector3} normal
+ * @param {!Three.Color} color
  * @param {!number} materialIndex
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/

@@ -23,7 +23,7 @@ THREE.BufferGeometry = function () {
 
 /**
  * @param {!string} name
- * @param {*} attribute
+ * @param {!*} attribute
  */
 THREE.BufferGeometry.prototype.addAttribute= function ( name, attribute ) {
 		if ( attribute instanceof THREE.BufferAttribute === false ) {
@@ -373,8 +373,8 @@ THREE.BufferGeometry.prototype.computeVertexNormals = function () {
 
 
 /**
- based on http://www.terathon.com/code/tangent.html
- (per vertex tangents)
+ * based on http://www.terathon.com/code/tangent.html
+ * (per vertex tangents)
  */
 THREE.BufferGeometry.prototype.computeTangents = function () {
 		if ( this.attributes[ "index" ] === undefined ||

@@ -55,7 +55,7 @@ THREE.Geometry = function () {
 
 
 /**
- * @param {*} matrix
+ * @param {!THREE.Matrix3} matrix
  */
 Three.Geometry.prototype.applyMatrix = function ( matrix ) {
 		var normalMatrix = new THREE.Matrix3().getNormalMatrix( matrix );

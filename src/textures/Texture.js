@@ -65,7 +65,7 @@ THREE.Texture.prototype.setNeedsUpdate =function( value ) {
 
 
 /**
- * @param {THREE.Texture} texture
+ * @param {!THREE.Texture} texture
  */
 THREE.Texture.prototype.clone = function ( texture ) {
 		if ( texture === undefined ) texture = new THREE.Texture();

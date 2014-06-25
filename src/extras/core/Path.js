@@ -1,11 +1,17 @@
+goog.provide('THREE.Path');
+goog.provide('THREE.PathActions');
+
+goog.require('THREE.CurvePath');
+
+
+
 /**
+ * @constructor
  * @author zz85 / http://www.lab4games.net/zz85/blog
- * Creates free form 2d path using series of points, lines or curves.
  *
- **/
-
+ * Creates free form 2d path using series of points, lines or curves.
+ */
 THREE.Path = function ( points ) {
-
 	THREE.CurvePath.call(this);
 
 	this.actions = [];
@@ -15,29 +21,17 @@ THREE.Path = function ( points ) {
 		this.fromPoints( points );
 
 	}
-
 };
+goog.inherits(THREE.Path,THREE.CurvePath);
 
-THREE.Path.prototype = Object.create( THREE.CurvePath.prototype );
 
-THREE.PathActions = {
-
-	MOVE_TO: 'moveTo',
-	LINE_TO: 'lineTo',
-	QUADRATIC_CURVE_TO: 'quadraticCurveTo', // Bezier quadratic curve
-	BEZIER_CURVE_TO: 'bezierCurveTo', 		// Bezier cubic curve
-	CSPLINE_THRU: 'splineThru',				// Catmull-rom spline
-	ARC: 'arc',								// Circle
-	ELLIPSE: 'ellipse'
-};
-
-// TODO Clean up PATH API
-
-// Create path using straight lines to connect all points
-// - vectors: array of Vector2
-
+/**
+ * Create path using straight lines to connect all points
+ * TODO Clean up PATH API
+ *
+ * @param {!*} vectors array of Vector2
+ */
 THREE.Path.prototype.fromPoints = function ( vectors ) {
-
 	this.moveTo( vectors[ 0 ].x, vectors[ 0 ].y );
 
 	for ( var v = 1, vlen = vectors.length; v < vlen; v ++ ) {
@@ -45,20 +39,22 @@ THREE.Path.prototype.fromPoints = function ( vectors ) {
 		this.lineTo( vectors[ v ].x, vectors[ v ].y );
 
 	};
-
 };
 
-// startPath() endPath()?
 
+/**
+ * startPath() endPath()?
+ */
 THREE.Path.prototype.moveTo = function ( x, y ) {
-
 	var args = Array.prototype.slice.call( arguments );
 	this.actions.push( { action: THREE.PathActions.MOVE_TO, args: args } );
-
 };
 
-THREE.Path.prototype.lineTo = function ( x, y ) {
 
+/**
+ *
+ */
+THREE.Path.prototype.lineTo = function ( x, y ) {
 	var args = Array.prototype.slice.call( arguments );
 
 	var lastargs = this.actions[ this.actions.length - 1 ].args;
@@ -70,11 +66,13 @@ THREE.Path.prototype.lineTo = function ( x, y ) {
 	this.curves.push( curve );
 
 	this.actions.push( { action: THREE.PathActions.LINE_TO, args: args } );
-
 };
 
-THREE.Path.prototype.quadraticCurveTo = function( aCPx, aCPy, aX, aY ) {
 
+/**
+ *
+ */
+THREE.Path.prototype.quadraticCurveTo = function( aCPx, aCPy, aX, aY ) {
 	var args = Array.prototype.slice.call( arguments );
 
 	var lastargs = this.actions[ this.actions.length - 1 ].args;
@@ -88,9 +86,12 @@ THREE.Path.prototype.quadraticCurveTo = function( aCPx, aCPy, aX, aY ) {
 	this.curves.push( curve );
 
 	this.actions.push( { action: THREE.PathActions.QUADRATIC_CURVE_TO, args: args } );
-
 };
 
+
+/**
+ *
+ */
 THREE.Path.prototype.bezierCurveTo = function( aCP1x, aCP1y,
 											   aCP2x, aCP2y,
 											   aX, aY ) {
@@ -109,11 +110,13 @@ THREE.Path.prototype.bezierCurveTo = function( aCP1x, aCP1y,
 	this.curves.push( curve );
 
 	this.actions.push( { action: THREE.PathActions.BEZIER_CURVE_TO, args: args } );
-
 };
 
-THREE.Path.prototype.splineThru = function( pts /*Array of Vector*/ ) {
 
+/**
+ *
+ */
+THREE.Path.prototype.splineThru = function( pts /*Array of Vector*/ ) {
 	var args = Array.prototype.slice.call( arguments );
 	var lastargs = this.actions[ this.actions.length - 1 ].args;
 
@@ -127,11 +130,12 @@ THREE.Path.prototype.splineThru = function( pts /*Array of Vector*/ ) {
 	this.curves.push( curve );
 
 	this.actions.push( { action: THREE.PathActions.CSPLINE_THRU, args: args } );
-
 };
 
-// FUTURE: Change the API or follow canvas API?
 
+/**
+ * FUTURE: Change the API or follow canvas API?
+ */
 THREE.Path.prototype.arc = function ( aX, aY, aRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
 
@@ -141,14 +145,21 @@ THREE.Path.prototype.arc = function ( aX, aY, aRadius,
 
 	this.absarc(aX + x0, aY + y0, aRadius,
 		aStartAngle, aEndAngle, aClockwise );
-
  };
 
- THREE.Path.prototype.absarc = function ( aX, aY, aRadius,
+
+/**
+ *
+ */
+THREE.Path.prototype.absarc = function ( aX, aY, aRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
 	this.absellipse(aX, aY, aRadius, aRadius, aStartAngle, aEndAngle, aClockwise);
  };
 
+
+/**
+ *
+ */
 THREE.Path.prototype.ellipse = function ( aX, aY, xRadius, yRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
 
@@ -158,10 +169,12 @@ THREE.Path.prototype.ellipse = function ( aX, aY, xRadius, yRadius,
 
 	this.absellipse(aX + x0, aY + y0, xRadius, yRadius,
 		aStartAngle, aEndAngle, aClockwise );
-
  };
 
 
+/**
+ *
+ */
 THREE.Path.prototype.absellipse = function ( aX, aY, xRadius, yRadius,
 									  aStartAngle, aEndAngle, aClockwise ) {
 
@@ -175,11 +188,14 @@ THREE.Path.prototype.absellipse = function ( aX, aY, xRadius, yRadius,
 	args.push(lastPoint.y);
 
 	this.actions.push( { action: THREE.PathActions.ELLIPSE, args: args } );
-
  };
 
-THREE.Path.prototype.getSpacedPoints = function ( divisions, closedPath ) {
 
+/**
+ * @param {!number} divisions
+ * @param {!*} closedPath
+ */
+THREE.Path.prototype.getSpacedPoints = function ( divisions, closedPath ) {
 	if ( ! divisions ) divisions = 40;
 
 	var points = [];
@@ -199,13 +215,13 @@ THREE.Path.prototype.getSpacedPoints = function ( divisions, closedPath ) {
 	// }
 
 	return points;
-
 };
 
-/* Return an array of vectors based on contour of the path */
 
+/**
+ * Return an array of vectors based on contour of the path
+ */
 THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
-
 	if (this.useSpacedPoints) {
 		console.log('tata');
 		return this.getSpacedPoints( divisions, closedPath );
@@ -418,8 +434,6 @@ THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
 
 	}
 
-
-
 	// Normalize to remove the closing point by default.
 	var lastPoint = points[ points.length - 1];
 	var EPSILON = 0.0000000001;
@@ -433,23 +447,21 @@ THREE.Path.prototype.getPoints = function( divisions, closedPath ) {
 	}
 
 	return points;
-
 };
 
-//
-// Breaks path into shapes
-//
-//	Assumptions (if parameter isCCW==true the opposite holds):
-//	- solid shapes are defined clockwise (CW)
-//	- holes are defined counterclockwise (CCW)
-//
-//	If parameter noHoles==true:
-//  - all subPaths are regarded as solid shapes
-//  - definition order CW/CCW has no relevance
-//
 
+/**
+ *  Breaks path into shapes
+ * 
+ * 	Assumptions (if parameter isCCW==true the opposite holds):
+ * 	- solid shapes are defined clockwise (CW)
+ * 	- holes are defined counterclockwise (CCW)
+ * 
+ * 	If parameter noHoles==true:
+ *   - all subPaths are regarded as solid shapes
+ *   - definition order CW/CCW has no relevance
+ */
 THREE.Path.prototype.toShapes = function( isCCW, noHoles ) {
-
 	function extractSubpaths( inActions ) {
 
 		var i, il, item, action, args;
@@ -671,5 +683,19 @@ THREE.Path.prototype.toShapes = function( isCCW, noHoles ) {
 	//console.log("shape", shapes);
 
 	return shapes;
+};
 
+
+
+/**
+ * @type {!string}
+ */
+THREE.PathActions = {
+	MOVE_TO: 'moveTo',
+	LINE_TO: 'lineTo',
+	QUADRATIC_CURVE_TO: 'quadraticCurveTo', // Bezier quadratic curve
+	BEZIER_CURVE_TO: 'bezierCurveTo', 		// Bezier cubic curve
+	CSPLINE_THRU: 'splineThru',				// Catmull-rom spline
+	ARC: 'arc',								// Circle
+	ELLIPSE: 'ellipse'
 };

@@ -1,4 +1,9 @@
+goog.provide('THREE.KeyFrameAnimation');
+
+
+
 /**
+ * @constructor
  * @author mikael emtinger / http://gomo.se/
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
@@ -7,7 +12,6 @@
  */
 
 THREE.KeyFrameAnimation = function ( root, data ) {
-
 	this.root = root;
 	this.data = THREE.AnimationHandler.get( data );
 	this.hierarchy = THREE.AnimationHandler.parse( root );
@@ -47,13 +51,15 @@ THREE.KeyFrameAnimation = function ( root, data ) {
 		}
 
 	}
-
 };
 
-// Play
 
+/**
+ * Play.
+ *
+ * @param {!*} startTime
+ */
 THREE.KeyFrameAnimation.prototype.play = function ( startTime ) {
-
 	this.currentTime = startTime !== undefined ? startTime : 0;
 
 	if ( this.isPlaying === false ) {
@@ -101,15 +107,13 @@ THREE.KeyFrameAnimation.prototype.play = function ( startTime ) {
 	this.isPaused = false;
 
 	THREE.AnimationHandler.addToUpdate( this );
-
 };
 
 
-
-// Pause
-
+/**
+ * Pause.
+ */
 THREE.KeyFrameAnimation.prototype.pause = function() {
-
 	if( this.isPaused ) {
 
 		THREE.AnimationHandler.addToUpdate( this );
@@ -121,14 +125,13 @@ THREE.KeyFrameAnimation.prototype.pause = function() {
 	}
 
 	this.isPaused = !this.isPaused;
-
 };
 
 
-// Stop
-
+/**
+ * Stop.
+ */
 THREE.KeyFrameAnimation.prototype.stop = function() {
-
 	this.isPlaying = false;
 	this.isPaused  = false;
 
@@ -162,14 +165,15 @@ THREE.KeyFrameAnimation.prototype.stop = function() {
 		}
 
 	}
-
 };
 
 
-// Update
-
+/**
+ * Update.
+ *
+ * @param {!number} delta
+ */
 THREE.KeyFrameAnimation.prototype.update = function ( delta ) {
-
 	if ( this.isPlaying === false ) return;
 
 	this.currentTime += delta * this.timeScale;
@@ -230,13 +234,17 @@ THREE.KeyFrameAnimation.prototype.update = function ( delta ) {
 		}
 
 	}
-
 };
 
-// Get next key with
 
+/**
+ * Get next key with
+ *
+ * @param {!number} sid
+ * @param {!number} h
+ * @param {!number} key
+ */
 THREE.KeyFrameAnimation.prototype.getNextKeyWith = function( sid, h, key ) {
-
 	var keys = this.data.hierarchy[ h ].keys;
 	key = key % keys.length;
 
@@ -251,13 +259,17 @@ THREE.KeyFrameAnimation.prototype.getNextKeyWith = function( sid, h, key ) {
 	}
 
 	return keys[ 0 ];
-
 };
 
-// Get previous key with
 
+/**
+ * Get previous key with
+ *
+ * @param {!number} sid
+ * @param {!number} h
+ * @param {!number} key
+ */
 THREE.KeyFrameAnimation.prototype.getPrevKeyWith = function( sid, h, key ) {
-
 	var keys = this.data.hierarchy[ h ].keys;
 	key = key >= 0 ? key : key + keys.length;
 
@@ -272,5 +284,4 @@ THREE.KeyFrameAnimation.prototype.getPrevKeyWith = function( sid, h, key ) {
 	}
 
 	return keys[ keys.length - 1 ];
-
 };

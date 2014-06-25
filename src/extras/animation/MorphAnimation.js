@@ -1,9 +1,12 @@
+goog.provide('THREE.MorphAnimation');
+
+
+
 /**
+ * @constructor
  * @author mrdoob / http://mrdoob.com
  */
-
 THREE.MorphAnimation = function ( mesh ) {
-
 	this.mesh = mesh;
 	this.frames = mesh.morphTargetInfluences.length;
 	this.currentTime = 0;
@@ -11,24 +14,29 @@ THREE.MorphAnimation = function ( mesh ) {
 	this.loop = true;
 
 	this.isPlaying = false;
-
 };
 
-THREE.MorphAnimation.prototype = {
 
-	play: function () {
-
+/**
+ *
+ */
+play = function () {
 		this.isPlaying = true;
+};
 
-	},
 
-	pause: function () {
-
+/**
+ *
+ */
+pause = function () {
 		this.isPlaying = false;
-	},
+};
 
-	update: ( function () {
 
+/**
+ *
+ */
+update = function () {
 		var lastFrame = 0;
 		var currentFrame = 0;
 
@@ -63,8 +71,5 @@ THREE.MorphAnimation.prototype = {
 			this.mesh.morphTargetInfluences[ frame ] = ( this.currentTime % interpolation ) / interpolation;
 			this.mesh.morphTargetInfluences[ lastFrame ] = 1 - this.mesh.morphTargetInfluences[ frame ];
 
-		}
-
-	} )()
-
-};
+		};
+}();

@@ -1,17 +1,24 @@
+goog.provide('THREE.Gryoscope');
+
+goog.require('THREE.Object3D');
+
+
+
 /**
+ * @constructor
+ * @extends {THREE.Object3D}
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.Gyroscope = function () {
-
-	THREE.Object3D.call( this );
-
+	goog.base(this);
 };
+goog.inherits(THREE.Gyroscope,THREE.Object3D);
 
-THREE.Gyroscope.prototype = Object.create( THREE.Object3D.prototype );
 
+/**
+ * @param {!boolean} force
+ */
 THREE.Gyroscope.prototype.updateMatrixWorld = function ( force ) {
-
 	this.matrixAutoUpdate && this.updateMatrix();
 
 	// update matrixWorld
@@ -48,13 +55,40 @@ THREE.Gyroscope.prototype.updateMatrixWorld = function ( force ) {
 		this.children[ i ].updateMatrixWorld( force );
 
 	}
-
 };
 
-THREE.Gyroscope.prototype.translationWorld = new THREE.Vector3();
-THREE.Gyroscope.prototype.translationObject = new THREE.Vector3();
-THREE.Gyroscope.prototype.quaternionWorld = new THREE.Quaternion();
-THREE.Gyroscope.prototype.quaternionObject = new THREE.Quaternion();
-THREE.Gyroscope.prototype.scaleWorld = new THREE.Vector3();
-THREE.Gyroscope.prototype.scaleObject = new THREE.Vector3();
 
+/**
+ * @type {!THREE.Vector3}
+ */
+THREE.Gyroscope.prototype.translationWorld = new THREE.Vector3();
+
+
+/**
+ * @type {!THREE.Vector3}
+ */
+THREE.Gyroscope.prototype.translationObject = new THREE.Vector3();
+
+
+/**
+ * @type {!THREE.Quaternion}
+ */
+THREE.Gyroscope.prototype.quaternionWorld = new THREE.Quaternion();
+
+
+/**
+ * @type {!THREE.Quaternion}
+ */
+THREE.Gyroscope.prototype.quaternionObject = new THREE.Quaternion();
+
+
+/**
+ * @type {!THREE.Vector3}
+ */
+THREE.Gyroscope.prototype.scaleWorld = new THREE.Vector3();
+
+
+/**
+ * @type {!THREE.Vector3}
+ */
+THREE.Gyroscope.prototype.scaleObject = new THREE.Vector3();

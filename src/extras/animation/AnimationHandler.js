@@ -1,9 +1,12 @@
+goog.provide('THREE.AnimationHandler');
+
+
+
 /**
+ * @constructor
  * @author mikael emtinger / http://gomo.se/
  */
-
 THREE.AnimationHandler = ( function () {
-
 	var playing = [];
 	var library = {};
 	var that    = {};
@@ -244,5 +247,4 @@ THREE.AnimationHandler = ( function () {
 	that.CATMULLROM_FORWARD = 2;
 
 	return that;
-
 }() );

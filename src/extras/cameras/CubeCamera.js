@@ -1,13 +1,21 @@
+goog.provide('THREE.CubeCamera');
+
+goog.require('THREE.Camera');
+
+
+
 /**
+ * @constructor
+ * @param {!number} near
+ * @param {!number} far
+ * @param {!number} cubeResolution
  * Camera for rendering cube maps
  *	- renders scene into axis-aligned cube
  *
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.CubeCamera = function ( near, far, cubeResolution ) {
-
-	THREE.Object3D.call( this );
+    goog.base(this);
 
 	var fov = 90, aspect = 1;
 
@@ -71,7 +79,5 @@ THREE.CubeCamera = function ( near, far, cubeResolution ) {
 		renderer.render( scene, cameraNZ, renderTarget );
 
 	};
-
 };
-
-THREE.CubeCamera.prototype = Object.create( THREE.Object3D.prototype );
+goog.inherits(THREE.CubeCamera,THREE.Camera);

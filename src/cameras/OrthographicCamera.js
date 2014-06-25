@@ -7,12 +7,12 @@ goog.require('THREE.Camera');
 /**
  * @constructor
  * @extends {!THREE.Camera}
- * @param {number} left
- * @param {number} right
- * @param {number} top
- * @param {number} bottom
- * @param {number} near
- * @param {number} far
+ * @param {!number} left
+ * @param {!number} right
+ * @param {!number} top
+ * @param {!number} bottom
+ * @param {!number} near
+ * @param {!number} far
  * @author alteredq / http://alteredqualia.com/
  */
 THREE.OrthographicCamera = function ( left, right, top, bottom, near, far ) {

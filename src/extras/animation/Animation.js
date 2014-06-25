@@ -1,11 +1,16 @@
+goog.provide('THREE.Animation');
+
+
+
 /**
+ * @constructor
+ * @param {!*} root
+ * @param {!string} name
  * @author mikael emtinger / http://gomo.se/
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
  */
-
 THREE.Animation = function ( root, name ) {
-
 	this.root = root;
 	this.data = THREE.AnimationHandler.get( name );
 	this.hierarchy = THREE.AnimationHandler.parse( root );
@@ -19,15 +24,19 @@ THREE.Animation = function ( root, name ) {
 	this.weight = 0;
 
 	this.interpolationType = THREE.AnimationHandler.LINEAR;
-
 };
 
 
+/**
+ * @type {!string}
+ */
 THREE.Animation.prototype.keyTypes = [ "pos", "rot", "scl" ];
 
 
+/**
+ *
+ */
 THREE.Animation.prototype.play = function ( startTime, weight ) {
-
 	this.currentTime = startTime !== undefined ? startTime : 0;
 	this.weight = weight !== undefined ? weight: 1;
 
@@ -37,12 +46,13 @@ THREE.Animation.prototype.play = function ( startTime, weight ) {
 	this.reset();
 
 	THREE.AnimationHandler.addToUpdate( this );
-
 };
 
 
+/**
+ *
+ */
 THREE.Animation.prototype.pause = function() {
-
 	if ( this.isPaused === true ) {
 
 		THREE.AnimationHandler.addToUpdate( this );
@@ -54,20 +64,23 @@ THREE.Animation.prototype.pause = function() {
 	}
 
 	this.isPaused = !this.isPaused;
-
 };
 
 
+/**
+ *
+ */
 THREE.Animation.prototype.stop = function() {
-
 	this.isPlaying = false;
 	this.isPaused  = false;
 	THREE.AnimationHandler.removeFromUpdate( this );
-
 };
 
-THREE.Animation.prototype.reset = function () {
 
+/**
+ *
+ */
+THREE.Animation.prototype.reset = function () {
 	for ( var h = 0, hl = this.hierarchy.length; h < hl; h ++ ) {
 
 		var object = this.hierarchy[ h ];
@@ -113,12 +126,13 @@ THREE.Animation.prototype.reset = function () {
 		}
 
 	}
-
 };
 
 
+/**
+ *
+ */
 THREE.Animation.prototype.update = (function(){
-
 	var points = [];
 	var target = new THREE.Vector3();
 	var newVector = new THREE.Vector3();
@@ -154,7 +168,6 @@ THREE.Animation.prototype.update = (function(){
 		v3[ 2 ] = interpolate( pa[ 2 ], pb[ 2 ], pc[ 2 ], pd[ 2 ], weight, w2, w3 );
 
 		return v3;
-
 	};
 
 	var interpolate = function ( p0, p1, p2, p3, t, t2, t3 ) {
@@ -348,17 +361,13 @@ THREE.Animation.prototype.update = (function(){
 		return true;
 
 	};
-
 })();
 
 
-
-
-
-// Get next key with
-
+/**
+ * Get next key with
+ */
 THREE.Animation.prototype.getNextKeyWith = function ( type, h, key ) {
-
 	var keys = this.data.hierarchy[ h ].keys;
 
 	if ( this.interpolationType === THREE.AnimationHandler.CATMULLROM ||
@@ -383,13 +392,13 @@ THREE.Animation.prototype.getNextKeyWith = function ( type, h, key ) {
 	}
 
 	return this.data.hierarchy[ h ].keys[ 0 ];
-
 };
 
-// Get previous key with
 
+/**
+ * Get previous key with
+ */
 THREE.Animation.prototype.getPrevKeyWith = function ( type, h, key ) {
-
 	var keys = this.data.hierarchy[ h ].keys;
 
 	if ( this.interpolationType === THREE.AnimationHandler.CATMULLROM ||
@@ -415,5 +424,4 @@ THREE.Animation.prototype.getPrevKeyWith = function ( type, h, key ) {
 	}
 
 	return this.data.hierarchy[ h ].keys[ keys.length - 1 ];
-
 };
