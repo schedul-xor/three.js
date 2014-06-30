@@ -29,6 +29,7 @@
 // three.js / threejs.org/license
 // three.js / threejs.org/license
 // three.js / threejs.org/license
+// three.js / threejs.org/license
 goog.provide('THREE');
 
 

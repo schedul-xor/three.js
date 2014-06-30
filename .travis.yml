@@ -1,5 +1,8 @@
 language: python
 
+before-script:
+  - "pip install watchdog"
+
 script:
   - "cd utils/build"
   - "python build.py --include common --minify"
