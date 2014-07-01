@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import subprocess
 
 if sys.version_info < (2, 7):
 	print("This script requires at least Python 2.7.")
@@ -78,7 +79,10 @@ def main(argv=None):
 		if args.minifymore is True:
 			advanced = ' --compilation_level=ADVANCED_OPTIMIZATIONS '
 		cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs %s --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT %s --js %s --js_output_file %s %s' % (externs, advanced, source, output, sourcemapargs)
-		os.system(cmd)
+		returncode = subprocess.call(cmd)
+		print returncode
+		if returncode != 0:
+			quit(returncode)
 
 		# header
 
