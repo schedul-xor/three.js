@@ -12,6 +12,7 @@ import json
 import os
 import shutil
 import tempfile
+from subprocess import call
 
 
 def main(argv=None):
@@ -66,6 +67,7 @@ def main(argv=None):
 
 	# save
 
+        subprocess_result = 0
 	if args.minify is False:
 		shutil.copy(path, output)
 		os.chmod(output, 0o664); # temp files would usually get 0600
@@ -78,7 +80,8 @@ def main(argv=None):
 		if args.minifymore is True:
 			advanced = ' --compilation_level=ADVANCED_OPTIMIZATIONS '
 		cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs %s --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT %s --js %s --js_output_file %s %s' % (externs, advanced, source, output, sourcemapargs)
-		os.system(cmd)
+                print cmd
+		subprocess_result = call(cmd)
 
 		# header
 
@@ -88,6 +91,7 @@ def main(argv=None):
 	os.close(fd)
 	os.remove(path)
 
+        quit(subprocess_result)
 
 if __name__ == "__main__":
 	main()
